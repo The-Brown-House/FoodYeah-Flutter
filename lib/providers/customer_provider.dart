@@ -7,6 +7,9 @@ import 'package:foodyeah/services/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+//Este es un provider de Customers, aca se utiliza para generar todo lo de los customers y por ahora obtener solo el token
+//pero tambien se puede logear y registrarse
+
 class Customers with ChangeNotifier {
   final String URI = Constants().URL + "identity";
   var headers = {
@@ -23,8 +26,12 @@ class Customers with ChangeNotifier {
       'firstname': customer.firstname,
       'lastname': customer.lastname
     });
+    //aca hago el request y guardo el response, uso async y await porque bueno, good practice pero supongo que no es
+    //necesario al menos porque no hay funciones async o awaint en el back
     var response = await http.post(uri, body: body, headers: headers);
     if (response.statusCode == 200) {
+      //Este es un servicio que cree para notificar a los usuarios en una cosita
+      //donde pones el mensaje (de la clase mensajes) y el tipo success o error
       NotificationService()
           .ShowSnackbar(context, Messages().successRegister, "success");
     } else {
@@ -43,7 +50,7 @@ class Customers with ChangeNotifier {
     if (response.statusCode == 200) {
       NotificationService()
           .ShowSnackbar(context, Messages().successLogIn, "success");
-
+      //aca en caso de que cuando te logees el code sea 200, te da el mensaje de success y guarda el token
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', response.body);
       Navigator.of(context).pushReplacementNamed(ruta);

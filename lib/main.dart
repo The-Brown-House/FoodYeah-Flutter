@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //El manejo de estados es para inutilizar los stateful widgets, son como los services en frontend
+        // y aca (ya que se usa muchos providers) se pone todos los provinders es como que la rama principal y este se expande
+        // a cada widget
         ChangeNotifierProvider(create: (ctx) => Products()),
         ChangeNotifierProvider(create: (ctx) => Customers()),
       ],
@@ -22,6 +25,8 @@ class MyApp extends StatelessWidget {
             accentColor: Color.fromRGBO(255, 30, 77, 1)),
         home: AuthenticationScreen(), //pagina por defecto
         routes: {
+          //aca para routear se pone el nombre de la ruta y qué va a renderizar
+          //nombre : funcion de flutter => Qué renderiza
           Home.routeName: (ctx) => Home(), //pagina principal
         },
       ),
