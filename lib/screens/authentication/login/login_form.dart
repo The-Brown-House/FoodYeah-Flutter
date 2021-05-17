@@ -1,7 +1,10 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Customer.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/home.dart';
+import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -14,17 +17,25 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
+  final transitionType = ContainerTransitionType.fade;
 
   final _emailFocusNode = FocusNode();
   final _contrasenaFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  void _saveForm() {
+  void _saveForm(Function open) {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
       _formKey.currentState!.save();
       Provider.of<Customers>(context, listen: false)
-          .LoginUser(_toSend, context, Home.routeName);
+          .LoginUser(_toSend, context)
+          .then((value) {
+        if (value == true) {
+          open();
+          NotificationService()
+              .ShowSnackbar(context, Messages().successLogIn, "success");
+        }
+      });
     }
   }
 
@@ -33,8 +44,8 @@ class _LoginFormState extends State<LoginForm> {
     return Container(
       alignment: Alignment.topCenter,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Form(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Form(
             key: _formKey,
             child: Column(
               children: [
@@ -94,27 +105,34 @@ class _LoginFormState extends State<LoginForm> {
                 SizedBox(
                   height: 30,
                 ),
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: () => _saveForm(),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).primaryColor),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ))),
-                      child: Text(
-                        "Iniciar Sesión",
-                        style: GoogleFonts.varelaRound(fontSize: 18),
-                      )),
-                )
+                OpenContainer(
+                  transitionDuration: Duration(seconds: 1),
+                  transitionType: transitionType,
+                  openBuilder: (context, _) => Home(),
+                  closedColor: Theme.of(context).primaryColor,
+                  closedBuilder: (_, open) => SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          _saveForm(open);
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Theme.of(context).primaryColor),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))),
+                        child: Text(
+                          "Iniciar Sesión",
+                          style: GoogleFonts.varelaRound(fontSize: 18),
+                        )),
+                  ),
+                ),
               ],
-            )),
-      ),
+            ),
+          )),
     );
   }
 }

@@ -11,8 +11,14 @@ class AuthenticationScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<AuthenticationScreen> {
+class _LoginScreenState extends State<AuthenticationScreen>
+    with TickerProviderStateMixin {
   List<bool> _selected = [true, false];
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +67,8 @@ class _LoginScreenState extends State<AuthenticationScreen> {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Container(
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
                   margin: EdgeInsets.only(top: 120),
                   height:
                       _selected[0] ? deviceHeight * 0.5 : deviceHeight * 0.6,
@@ -109,8 +116,7 @@ class _LoginScreenState extends State<AuthenticationScreen> {
                                 )
                               ],
                             ),
-                            if (_selected[0]) LoginForm(),
-                            if (_selected[1]) RegisterForm()
+                            _selected[0] ? LoginForm() : RegisterForm()
                           ],
                         ),
                       ),

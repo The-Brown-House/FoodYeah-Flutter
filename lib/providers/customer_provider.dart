@@ -40,23 +40,22 @@ class Customers with ChangeNotifier {
     }
   }
 
-  Future<void> LoginUser(
-      CustomerLoginDto customer, BuildContext context, ruta) async {
+  Future<bool> LoginUser(
+      CustomerLoginDto customer, BuildContext context) async {
     var uri = Uri.parse(URI + "/login");
     var body =
         jsonEncode({'email': customer.email, 'password': customer.password});
     var response = await http.post(uri, body: body, headers: headers);
 
     if (response.statusCode == 200) {
-      NotificationService()
-          .ShowSnackbar(context, Messages().successLogIn, "success");
       //aca en caso de que cuando te logees el code sea 200, te da el mensaje de success y guarda el token
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('token', response.body);
-      Navigator.of(context).pushReplacementNamed(ruta);
+      return true;
     } else {
       NotificationService()
           .ShowSnackbar(context, Messages().errorLogIn, "error");
+      return false;
     }
   }
 
