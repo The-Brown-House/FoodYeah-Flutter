@@ -1,4 +1,5 @@
 class Messages {
+  //Una clase con puros mensajes,no worrie
   String successTitle = "¡Excelente!";
   String errorTitle = "¡Ups!, hubo un problema";
   String warningTitle = "Advertencia";
