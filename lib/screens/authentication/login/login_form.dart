@@ -15,18 +15,35 @@ class LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends State<LoginForm>
+    with SingleTickerProviderStateMixin {
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
+  bool loader = false;
 
   final _emailFocusNode = FocusNode();
   final _contrasenaFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _saveForm(Function open) {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
       _formKey.currentState!.save();
+      setState(() {
+        loader = true;
+      });
+
+      print(loader);
       Provider.of<Customers>(context, listen: false)
           .LoginUser(_toSend, context)
           .then((value) {
@@ -35,6 +52,9 @@ class _LoginFormState extends State<LoginForm> {
           NotificationService()
               .ShowSnackbar(context, Messages().successLogIn, "success");
         }
+        setState(() {
+          loader = false;
+        });
       });
     }
   }
@@ -108,27 +128,41 @@ class _LoginFormState extends State<LoginForm> {
                 OpenContainer(
                   transitionDuration: Duration(seconds: 1),
                   transitionType: transitionType,
+                  closedElevation: 0,
+                  openElevation: 0,
                   openBuilder: (context, _) => Home(),
-                  closedColor: Theme.of(context).primaryColor,
-                  closedBuilder: (_, open) => SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          _saveForm(open);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Theme.of(context).primaryColor),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ))),
-                        child: Text(
-                          "Iniciar Sesión",
-                          style: GoogleFonts.varelaRound(fontSize: 18),
-                        )),
-                  ),
+                  closedBuilder: (_, open) => loader
+                      ? Container(
+                          padding: EdgeInsets.all(4),
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(Colors.blue),
+                          ),
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                _saveForm(open);
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Theme.of(context).primaryColor),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ))),
+                              child: Text(
+                                "Iniciar Sesión",
+                                style: GoogleFonts.varelaRound(fontSize: 18),
+                              )),
+                        ),
                 ),
               ],
             ),

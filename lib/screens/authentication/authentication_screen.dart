@@ -12,12 +12,26 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<AuthenticationScreen>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   List<bool> _selected = [true, false];
+
+  AnimationController? animation;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _opacityAnimation2;
+
+  void _switchAuth(index) {
+    setState(() {
+      _selected = List.generate(_selected.length, (index) => false);
+      _selected[index] = true;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    animation =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(animation!);
   }
 
   @override
@@ -29,6 +43,7 @@ class _LoginScreenState extends State<AuthenticationScreen>
         body: Container(
           width: deviceWidth,
           height: deviceHeight,
+          color: Colors.blueGrey.shade50,
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -68,6 +83,7 @@ class _LoginScreenState extends State<AuthenticationScreen>
               Align(
                 alignment: Alignment.center,
                 child: AnimatedContainer(
+                  curve: Curves.linear,
                   duration: Duration(milliseconds: 300),
                   margin: EdgeInsets.only(top: 120),
                   height:
@@ -106,17 +122,19 @@ class _LoginScreenState extends State<AuthenticationScreen>
                                     ],
                                     isSelected: _selected,
                                     onPressed: (index) {
-                                      setState(() {
-                                        _selected = List.generate(
-                                            _selected.length, (index) => false);
-                                        _selected[index] = true;
-                                      });
+                                      _switchAuth(index);
                                     },
                                   ),
                                 )
                               ],
                             ),
-                            _selected[0] ? LoginForm() : RegisterForm()
+                            AnimatedSwitcher(
+                              duration: Duration(milliseconds: 280),
+                              switchInCurve: Curves.easeIn,
+                              switchOutCurve: Curves.easeOut,
+                              child:
+                                  _selected[0] ? LoginForm() : RegisterForm(),
+                            ),
                           ],
                         ),
                       ),

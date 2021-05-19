@@ -20,8 +20,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final _contrasenaFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  var _credentials = {};
-
   void _saveForm() {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {

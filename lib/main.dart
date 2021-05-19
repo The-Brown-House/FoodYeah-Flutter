@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         title: 'FoodYeah',
         theme: ThemeData(
             primaryColor: Colors.redAccent,
-            accentColor: Color.fromRGBO(255, 30, 77, 1)),
+            accentColor: Colors.blueGrey.shade50),
         home: AuthenticationScreen(), //pagina por defecto
         routes: {
           //aca para routear se pone el nombre de la ruta y qué va a renderizar

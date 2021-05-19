@@ -6,6 +6,7 @@ import 'package:foodyeah/models/Customer.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 //Este es un provider de Customers, aca se utiliza para generar todo lo de los customers y por ahora obtener solo el token
 //pero tambien se puede logear y registrarse
@@ -63,5 +64,17 @@ class Customers with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     return token!.isEmpty;
+  }
+
+  Future<String> getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
+    return token;
+  }
+
+  Future<Map<String, dynamic>> getDataFromJwt() async {
+    var test = await getToken();
+    Map<String, dynamic> payload = Jwt.parseJwt(test);
+    return payload;
   }
 }
