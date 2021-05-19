@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,8 @@ class _HomeState extends State<Home> {
     //Aca estoy usando el provider de customers para obtener data
     //si pones listen: true cada vez que en el provider se realice el changenotifiers()
     //todo el widget recarga
-    var provider = Provider.of<Customers>(context, listen: true);
-    var values = provider.getDataFromJwt();
+    var customerProvider = Provider.of<Customers>(context, listen: true);
+    var values = customerProvider.getDataFromJwt();
     var days = List.generate(5, (index) => index.toString());
 
     return Scaffold(
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
                       child: Text("Nuestro menu",
                           style: GoogleFonts.varelaRound(fontSize: 20)),
                     ),
-                    1500),
+                    1200),
                 FadeAnimation(
                     Container(
                         width: double.infinity,
@@ -83,7 +84,7 @@ class _HomeState extends State<Home> {
                           itemBuilder: (ctx, index) => MenuDayCard(index),
                           itemCount: days.length,
                         )),
-                    1800),
+                    1500),
               ],
             )));
   }

@@ -26,7 +26,7 @@ class MenuDayCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(MenuSemanal.routeName,
-            arguments: {'id': dayNumber, 'dayName': days[dayNumber]});
+            arguments: {'id': dayNumber + 1, 'dayName': days[dayNumber]});
       },
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 400),
