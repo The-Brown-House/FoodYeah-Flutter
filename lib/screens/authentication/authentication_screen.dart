@@ -16,8 +16,6 @@ class _LoginScreenState extends State<AuthenticationScreen>
   List<bool> _selected = [true, false];
 
   AnimationController? animation;
-  late Animation<double> _opacityAnimation;
-  late Animation<double> _opacityAnimation2;
 
   void _switchAuth(index) {
     setState(() {
@@ -31,7 +29,6 @@ class _LoginScreenState extends State<AuthenticationScreen>
     super.initState();
     animation =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-    _opacityAnimation = Tween(begin: 0.0, end: 1.0).animate(animation!);
   }
 
   @override

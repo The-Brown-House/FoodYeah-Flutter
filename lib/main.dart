@@ -3,6 +3,7 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/authentication/authentication_screen.dart';
 import 'package:foodyeah/screens/core/home.dart';
+import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
           //aca para routear se pone el nombre de la ruta y qué va a renderizar
           //nombre : funcion de flutter => Qué renderiza
           Home.routeName: (ctx) => Home(), //pagina principal
+          MenuSemanal.routeName: (ctx) => MenuSemanal()
         },
       ),
     );

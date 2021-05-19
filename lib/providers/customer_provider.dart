@@ -18,7 +18,7 @@ class Customers with ChangeNotifier {
     "content-type": "application/json"
   };
 
-  Future<void> RegisterUser(
+  Future<void> registerUser(
       CustomerRegisterDto customer, BuildContext context) async {
     var uri = Uri.parse(URI + "/register");
     var body = jsonEncode({
@@ -34,14 +34,14 @@ class Customers with ChangeNotifier {
       //Este es un servicio que cree para notificar a los usuarios en una cosita
       //donde pones el mensaje (de la clase mensajes) y el tipo success o error
       NotificationService()
-          .ShowSnackbar(context, Messages().successRegister, "success");
+          .showSnackbar(context, Messages().successRegister, "success");
     } else {
       NotificationService()
-          .ShowSnackbar(context, Messages().errorFormRegister, "error");
+          .showSnackbar(context, Messages().errorFormRegister, "error");
     }
   }
 
-  Future<bool> LoginUser(
+  Future<bool> loginUser(
       CustomerLoginDto customer, BuildContext context) async {
     var uri = Uri.parse(URI + "/login");
     var body =
@@ -55,12 +55,12 @@ class Customers with ChangeNotifier {
       return true;
     } else {
       NotificationService()
-          .ShowSnackbar(context, Messages().errorLogIn, "error");
+          .showSnackbar(context, Messages().errorLogIn, "error");
       return false;
     }
   }
 
-  Future<bool> IsUser() async {
+  Future<bool> isUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     return token!.isEmpty;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NotificationService {
-  void ShowSnackbar(BuildContext context, String message, String type) {
+  void showSnackbar(BuildContext context, String message, String type) {
     Color background = Colors.white;
     if (type == "error") {
       background = Colors.red;

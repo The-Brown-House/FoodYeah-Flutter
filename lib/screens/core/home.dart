@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home();
   //nombre de la ruta que se usa para el ruteo en main
   static const routeName = "/home";
 
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     //Aca estoy usando el provider de customers para obtener data
@@ -15,7 +22,7 @@ class Home extends StatelessWidget {
     //todo el widget recarga
     var provider = Provider.of<Customers>(context, listen: true);
     var values = provider.getDataFromJwt();
-    var days = List.generate(7, (index) => index.toString());
+    var days = List.generate(5, (index) => index.toString());
 
     return Scaffold(
         appBar: AppBar(
@@ -43,32 +50,40 @@ class Home extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                FutureBuilder(
-                  builder: (ctx, snapshot) {
-                    var data = snapshot.data as Map<String, dynamic>;
-                    return Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "Bienvenido, " + data['family_name'],
-                          style: GoogleFonts.varelaRound(fontSize: 25),
-                        ));
-                  },
-                  future: values,
+                FadeAnimation(
+                    FutureBuilder(
+                      builder: (ctx, snapshot) {
+                        var data = snapshot.data as Map<String, dynamic>;
+                        return Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Bienvenido, " + data['family_name'],
+                              style: GoogleFonts.varelaRound(fontSize: 25),
+                            ));
+                      },
+                      future: values,
+                    ),
+                    2000), //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
+                SizedBox(
+                  height: 20,
                 ),
-                Container(
-                    width: double.infinity,
-                    height: 80,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) => Container(
-                        width: 100,
-                        height: 80,
-                        child: Card(
-                          child: Text(index.toString()),
-                        ),
-                      ),
-                      itemCount: days.length,
-                    ))
+                FadeAnimation(
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Nuestro menu",
+                          style: GoogleFonts.varelaRound(fontSize: 20)),
+                    ),
+                    1500),
+                FadeAnimation(
+                    Container(
+                        width: double.infinity,
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (ctx, index) => MenuDayCard(index),
+                          itemCount: days.length,
+                        )),
+                    1800),
               ],
             )));
   }
