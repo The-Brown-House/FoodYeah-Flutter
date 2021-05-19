@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product.dart';
 import 'package:foodyeah/providers/products_provider.dart';
+import 'package:foodyeah/screens/core/products/product_list_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -57,15 +58,10 @@ class _MenuSemanalState extends State<MenuSemanal> {
                           return Container(
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.8,
-                            child: GridView.builder(
+                            child: ListView.builder(
                                 itemCount: items.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 3 / 2,
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10),
-                                itemBuilder: (ctx, indx) => Card()),
+                                itemBuilder: (ctx, indx) =>
+                                    ProductListItem(items[indx])),
                           );
                         } else {
                           return Container(
@@ -89,7 +85,7 @@ class _MenuSemanalState extends State<MenuSemanal> {
                         return Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.8,
-                          child: Text("Gola"),
+                          child: Text("Load"),
                         );
                       }
                     } else {

@@ -28,9 +28,8 @@ class _FadeAnimationState extends State<FadeAnimation>
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
     controller!.dispose();
+    super.dispose();
   }
 
   @override

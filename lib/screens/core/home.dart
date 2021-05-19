@@ -17,6 +17,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //Aca estoy usando el provider de customers para obtener data
     //si pones listen: true cada vez que en el provider se realice el changenotifiers()
@@ -54,13 +64,17 @@ class _HomeState extends State<Home> {
                 FadeAnimation(
                     FutureBuilder(
                       builder: (ctx, snapshot) {
-                        var data = snapshot.data as Map<String, dynamic>;
-                        return Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              "Bienvenido, " + data['family_name'],
-                              style: GoogleFonts.varelaRound(fontSize: 25),
-                            ));
+                        if (snapshot.data != null) {
+                          var data = snapshot.data as Map<String, dynamic>;
+                          return Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Bienvenido, " + data['family_name'],
+                                style: GoogleFonts.varelaRound(fontSize: 25),
+                              ));
+                        } else {
+                          return Container();
+                        }
                       },
                       future: values,
                     ),

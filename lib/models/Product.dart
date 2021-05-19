@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-
-import 'Product_Category.dart';
-
 class Product {
   final String? id;
   final String? name;

@@ -22,4 +22,16 @@ class Products with ChangeNotifier {
     }
     return [];
   }
+
+  Future<Product?> getProductById(String id) async {
+    var uri = Uri.parse(URI + "/" + id);
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      var item = Product.fromJson(body);
+      return item;
+    }
+    return new Product(
+        id: "", imageUrl: "", name: "", price: 0, sellDay: "0", stock: 1);
+  }
 }
