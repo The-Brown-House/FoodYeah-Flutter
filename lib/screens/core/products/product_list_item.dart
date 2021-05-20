@@ -12,7 +12,18 @@ class ProductListItem extends StatefulWidget {
   _ProductListItemState createState() => _ProductListItemState();
 }
 
-class _ProductListItemState extends State<ProductListItem> {
+class _ProductListItemState extends State<ProductListItem>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget makeProduct({image, title, price}) {
     return GestureDetector(
       onTap: () {
@@ -52,29 +63,37 @@ class _ProductListItemState extends State<ProductListItem> {
                           FadeAnimation(
                               Text(title,
                                   style: GoogleFonts.varelaRound(
-                                      color: Colors.white, fontSize: 28)),
-                              600),
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold)),
+                              600,
+                              1),
                           FadeAnimation(
                               Text(
-                                price,
+                                "S/" + price,
                                 style: GoogleFonts.varelaRound(
-                                    color: Colors.white, fontSize: 30),
+                                    color: Colors.white, fontSize: 25),
                               ),
-                              800),
+                              800,
+                              1),
                         ],
                       ),
                       Column(children: [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: Center(
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0, primary: Colors.transparent),
-                                onPressed: () {},
-                                child: Icon(Icons.shopping_cart)),
-                          ),
-                        )
+                        FadeAnimation(
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: Center(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        primary: Colors.transparent),
+                                    onPressed: () {},
+                                    child: Icon(Icons.shopping_cart)),
+                              ),
+                            ),
+                            700,
+                            1),
                       ])
                     ],
                   ),
