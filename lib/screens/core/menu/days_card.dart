@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class MenuDayCard extends StatelessWidget {
   final int dayNumber;
+
   MenuDayCard(this.dayNumber);
-
-  var days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
-
+  List<String> days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"];
   bool tap = false;
 
   Widget dayIcon() {
