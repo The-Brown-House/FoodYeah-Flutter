@@ -83,54 +83,47 @@ class _ProductDetailState extends State<ProductDetail>
                             style: GoogleFonts.varelaRound(fontSize: 20)),
                         Expanded(
                             child: Container(
-                          child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Material(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20)),
-                              elevation: 8,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.all(0),
-                                    elevation: 0,
-                                    primary: Colors.transparent),
-                                onPressed: () {},
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange.shade300,
+                          alignment: Alignment.bottomLeft,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.orange.shade400),
+                                  shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20),
-                                        bottomRight: Radius.circular(20)),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Agregar a la orden",
-                                          style: GoogleFonts.varelaRound(
-                                              fontSize: 20,
-                                              color: Colors.black)),
-                                      ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 0,
-                                              primary: Colors.transparent),
-                                          onPressed: () {},
-                                          child: Icon(
-                                            Icons.shopping_cart,
-                                            color: Colors.black,
-                                          ))
-                                    ],
-                                  ),
-                                ),
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10)),
+                                  ))),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Agregar a la orden",
+                                      style: GoogleFonts.varelaRound(
+                                          fontSize: 20, color: Colors.black)),
+                                  ElevatedButton(
+                                      onPressed: null,
+                                      style: ButtonStyle(
+                                          elevation:
+                                              MaterialStateProperty.all<double>(
+                                                  0),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  Colors.transparent)),
+                                      child: Icon(Icons.shopping_cart,
+                                          color: Colors.black))
+                                ],
                               ),
                             ),
                           ),
-                        ))
+                        )),
                       ],
                     ),
                     400,
