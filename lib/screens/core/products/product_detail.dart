@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product.dart';
-import 'package:foodyeah/providers/products_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class ProductDetail extends StatefulWidget {
   static const routeName = "/product-detail";
