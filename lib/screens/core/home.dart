@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
-import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

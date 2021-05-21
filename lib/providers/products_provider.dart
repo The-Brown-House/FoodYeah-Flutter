@@ -6,13 +6,13 @@ import 'package:foodyeah/models/Product.dart';
 import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
-  final String URI = Constants().URL + "products";
+  final String uri = Constants().url + "products";
   var headers = {
     "Accept": "application/json",
     "content-type": "application/json"
   };
   Future<List<Product>> getProductsBySellDay(int sellDay) async {
-    var uri = Uri.parse(URI + "/day/" + sellDay.toString());
+    var uri = Uri.parse(uri + "/day/" + sellDay.toString());
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
@@ -24,7 +24,7 @@ class Products with ChangeNotifier {
   }
 
   Future<Product?> getProductById(String id) async {
-    var uri = Uri.parse(URI + "/" + id);
+    var uri = Uri.parse(uri + "/" + id);
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
