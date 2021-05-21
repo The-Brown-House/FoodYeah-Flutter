@@ -34,7 +34,7 @@ class _MenuSemanalState extends State<MenuSemanal> {
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-        backgroundColor: getColor(args['id'] as int),
+        backgroundColor: Colors.blueGrey.shade50,
         elevation: 0,
       ),
       backgroundColor: Colors.blueGrey.shade50,

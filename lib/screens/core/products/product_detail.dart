@@ -38,7 +38,7 @@ class _ProductDetailState extends State<ProductDetail>
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-        backgroundColor: Colors.orange.shade300,
+        backgroundColor:Colors.blueGrey.shade50,
         elevation: 0,
       ),
       body: Container(

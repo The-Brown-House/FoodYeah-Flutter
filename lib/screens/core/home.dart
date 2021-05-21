@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
+          backgroundColor: Colors.blueGrey.shade50,
           elevation: 0,
           title: Image(
             image: AssetImage('assets/icon/icon.png'),
