@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             color: Colors.blueGrey.shade50,
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
               children: [
                 FadeAnimation(
@@ -78,7 +78,8 @@ class _HomeState extends State<Home> {
                       },
                       future: values,
                     ),
-                    2000), //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
+                    1000,
+                    1), //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
                 SizedBox(
                   height: 20,
                 ),
@@ -88,7 +89,8 @@ class _HomeState extends State<Home> {
                       child: Text("Nuestro menu",
                           style: GoogleFonts.varelaRound(fontSize: 20)),
                     ),
-                    1200),
+                    1200,
+                    1),
                 FadeAnimation(
                     Container(
                         width: double.infinity,
@@ -98,7 +100,8 @@ class _HomeState extends State<Home> {
                           itemBuilder: (ctx, index) => MenuDayCard(index),
                           itemCount: days.length,
                         )),
-                    1500),
+                    1500,
+                    1),
               ],
             )));
   }

@@ -15,6 +15,14 @@ class MenuSemanal extends StatefulWidget {
 }
 
 class _MenuSemanalState extends State<MenuSemanal> {
+  Color getColor(int day) {
+    if (day % 2 == 0) {
+      return Colors.redAccent;
+    } else {
+      return Colors.green.shade800;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final args =
@@ -31,7 +39,7 @@ class _MenuSemanalState extends State<MenuSemanal> {
       ),
       backgroundColor: Colors.blueGrey.shade50,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Container(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,7 +53,8 @@ class _MenuSemanalState extends State<MenuSemanal> {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  600),
+                  600,
+                  1),
               Container(
                 child: FutureBuilder(
                   future: productProvider.getProductsBySellDay(args['id']),
