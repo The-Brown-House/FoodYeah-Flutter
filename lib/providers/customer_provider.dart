@@ -12,7 +12,7 @@ import 'package:jwt_decode/jwt_decode.dart';
 //pero tambien se puede logear y registrarse
 
 class Customers with ChangeNotifier {
-  final String URI = Constants().URL + "identity";
+  final String apiurl = Constants().url + "identity";
   var headers = {
     "Accept": "application/json",
     "content-type": "application/json"
@@ -20,7 +20,7 @@ class Customers with ChangeNotifier {
 
   Future<void> registerUser(
       CustomerRegisterDto customer, BuildContext context) async {
-    var uri = Uri.parse(URI + "/register");
+    var uri = Uri.parse(apiurl + "/register");
     var body = jsonEncode({
       'email': customer.email,
       'password': customer.password,
@@ -43,7 +43,7 @@ class Customers with ChangeNotifier {
 
   Future<bool> loginUser(
       CustomerLoginDto customer, BuildContext context) async {
-    var uri = Uri.parse(URI + "/login");
+    var uri = Uri.parse(apiurl + "/login");
     var body =
         jsonEncode({'email': customer.email, 'password': customer.password});
     var response = await http.post(uri, body: body, headers: headers);

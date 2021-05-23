@@ -8,14 +8,14 @@ class Product {
   final String? sellDay;
   final int? stock;
   final String? description;
-  final Product_Category? category;
+  final ProductCategory? category;
 
   factory Product.fromJson(dynamic json) {
-    Map<String, dynamic> product_cat = json['product_Category'];
-    Product_Category product_category = new Product_Category(
-        product_cat['product_CategoryId'].toString(),
-        product_cat['product_CategoryName'],
-        product_cat['product_CategoryDescription']);
+    Map<String, dynamic> productcat = json['product_Category'];
+    ProductCategory productcategory = new ProductCategory(
+        productcat['product_CategoryId'].toString(),
+        productcat['product_CategoryName'],
+        productcat['product_CategoryDescription']);
     return Product(
         id: json['productId'].toString(),
         description: json['productDescription'] as String,
@@ -24,7 +24,7 @@ class Product {
         price: json['productPrice'] as double,
         sellDay: json['sellDay'].toString(),
         stock: json['stock'] as int,
-        category: product_category);
+        category: productcategory);
   }
 
   Product(
