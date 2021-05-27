@@ -34,10 +34,10 @@ class Customers with ChangeNotifier {
       //Este es un servicio que cree para notificar a los usuarios en una cosita
       //donde pones el mensaje (de la clase mensajes) y el tipo success o error
       NotificationService()
-          .showSnackbar(context, Messages().successRegister, "success");
+          .showSnackbar(context, Messages().successRegister, "success", null);
     } else {
       NotificationService()
-          .showSnackbar(context, Messages().errorFormRegister, "error");
+          .showSnackbar(context, Messages().errorFormRegister, "error", null);
     }
   }
 
@@ -55,7 +55,7 @@ class Customers with ChangeNotifier {
       return true;
     } else {
       NotificationService()
-          .showSnackbar(context, Messages().errorLogIn, "error");
+          .showSnackbar(context, Messages().errorLogIn, "error", null);
       return false;
     }
   }
@@ -73,8 +73,8 @@ class Customers with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> getDataFromJwt() async {
-    var test = await getToken();
-    Map<String, dynamic> payload = Jwt.parseJwt(test);
+    var token = await getToken();
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
     return payload;
   }
 }

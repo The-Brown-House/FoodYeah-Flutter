@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm>
         if (value == true) {
           open();
           NotificationService()
-              .showSnackbar(context, Messages().successLogIn, "success");
+              .showSnackbar(context, Messages().successLogIn, "success", null);
           _formKey.currentState!.reset();
         }
         setState(() {

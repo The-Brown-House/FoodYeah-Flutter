@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
+import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Product.dart';
+import 'package:foodyeah/providers/cart_provider.dart';
+import 'package:foodyeah/screens/core/cart/badge.dart';
+import 'package:foodyeah/screens/core/cart/cart_screen.dart';
+import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetail extends StatefulWidget {
   static const routeName = "/product-detail";
@@ -25,8 +31,8 @@ class _ProductDetailState extends State<ProductDetail>
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Product;
+    var cartProvider = Provider.of<Cart>(context);
 
-    //var productProvider = Provider.of<Products>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -38,6 +44,18 @@ class _ProductDetailState extends State<ProductDetail>
         ),
         backgroundColor: Colors.orange.shade300,
         elevation: 0,
+        actions: [
+          Consumer<Cart>(
+            builder: (_, cart, ch) =>
+                Badge(child: ch, value: cart.itemCount.toString()),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          )
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -98,7 +116,18 @@ class _ProductDetailState extends State<ProductDetail>
                                         bottomRight: Radius.circular(10),
                                         topLeft: Radius.circular(10)),
                                   ))),
-                              onPressed: () {},
+                              onPressed: () {
+                                cartProvider.addItem(args.id!, args.price!);
+                                NotificationService().showSnackbar(
+                                    context,
+                                    Messages().successAddCart,
+                                    "success",
+                                    SnackBarAction(
+                                        label: "Deshacer",
+                                        onPressed: () {
+                                          cartProvider.removeItem(args.id!);
+                                        }));
+                              },
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

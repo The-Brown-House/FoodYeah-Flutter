@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product.dart';
+import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
+import 'package:foodyeah/screens/core/cart/badge.dart';
+import 'package:foodyeah/screens/core/cart/cart_screen.dart';
 import 'package:foodyeah/screens/core/products/product_list_item.dart';
+import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -30,10 +34,23 @@ class _MenuSemanalState extends State<MenuSemanal> {
     var productProvider = Provider.of<Products>(context);
 
     return Scaffold(
+      drawer: CustomDrawer(getColor(args['id'] as int)),
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
+        actions: [
+          Consumer<Cart>(
+            builder: (_, cart, ch) =>
+                Badge(child: ch, value: cart.itemCount.toString()),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          )
+        ],
         backgroundColor: getColor(args['id'] as int),
         elevation: 0,
       ),
