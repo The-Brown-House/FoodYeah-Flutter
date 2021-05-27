@@ -12,7 +12,7 @@ import 'package:jwt_decode/jwt_decode.dart';
 //pero tambien se puede logear y registrarse
 
 class Customers with ChangeNotifier {
-  final String URI = Constants().URL + "identity";
+  final String apiurl = Constants().url + "identity";
   var headers = {
     "Accept": "application/json",
     "content-type": "application/json"
@@ -20,7 +20,7 @@ class Customers with ChangeNotifier {
 
   Future<void> registerUser(
       CustomerRegisterDto customer, BuildContext context) async {
-    var uri = Uri.parse(URI + "/register");
+    var uri = Uri.parse(apiurl + "/register");
     var body = jsonEncode({
       'email': customer.email,
       'password': customer.password,
@@ -34,16 +34,16 @@ class Customers with ChangeNotifier {
       //Este es un servicio que cree para notificar a los usuarios en una cosita
       //donde pones el mensaje (de la clase mensajes) y el tipo success o error
       NotificationService()
-          .showSnackbar(context, Messages().successRegister, "success");
+          .showSnackbar(context, Messages().successRegister, "success", null);
     } else {
       NotificationService()
-          .showSnackbar(context, Messages().errorFormRegister, "error");
+          .showSnackbar(context, Messages().errorFormRegister, "error", null);
     }
   }
 
   Future<bool> loginUser(
       CustomerLoginDto customer, BuildContext context) async {
-    var uri = Uri.parse(URI + "/login");
+    var uri = Uri.parse(apiurl + "/login");
     var body =
         jsonEncode({'email': customer.email, 'password': customer.password});
     var response = await http.post(uri, body: body, headers: headers);
@@ -55,7 +55,7 @@ class Customers with ChangeNotifier {
       return true;
     } else {
       NotificationService()
-          .showSnackbar(context, Messages().errorLogIn, "error");
+          .showSnackbar(context, Messages().errorLogIn, "error", null);
       return false;
     }
   }
@@ -73,8 +73,8 @@ class Customers with ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> getDataFromJwt() async {
-    var test = await getToken();
-    Map<String, dynamic> payload = Jwt.parseJwt(test);
+    var token = await getToken();
+    Map<String, dynamic> payload = Jwt.parseJwt(token);
     return payload;
   }
 }

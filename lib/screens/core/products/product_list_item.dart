@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
+import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Product.dart';
+import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/screens/core/products/product_detail.dart';
+import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProductListItem extends StatefulWidget {
   final Product? product;
@@ -24,7 +28,7 @@ class _ProductListItemState extends State<ProductListItem>
     super.dispose();
   }
 
-  Widget makeProduct({image, title, price}) {
+  Widget makeProduct({image, title, price, cartProvider}) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -88,7 +92,20 @@ class _ProductListItemState extends State<ProductListItem>
                                     style: ElevatedButton.styleFrom(
                                         elevation: 0,
                                         primary: Colors.transparent),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      cartProvider.addItem(widget.product!.id!,
+                                          widget.product!.price!);
+                                      NotificationService().showSnackbar(
+                                          context,
+                                          Messages().successAddCart,
+                                          "success",
+                                          SnackBarAction(
+                                              label: "Deshacer",
+                                              onPressed: () {
+                                                cartProvider.removeItem(
+                                                    widget.product!.id!);
+                                              }));
+                                    },
                                     child: Icon(Icons.shopping_cart)),
                               ),
                             ),
@@ -106,6 +123,7 @@ class _ProductListItemState extends State<ProductListItem>
 
   @override
   Widget build(BuildContext context) {
+    var cartProvider = Provider.of<Cart>(context);
     return Container(
         margin: EdgeInsets.symmetric(vertical: 10),
         width: double.infinity,
@@ -113,6 +131,7 @@ class _ProductListItemState extends State<ProductListItem>
         child: makeProduct(
             image: widget.product!.imageUrl,
             price: widget.product!.price.toString(),
-            title: widget.product!.name));
+            title: widget.product!.name,
+            cartProvider: cartProvider));
   }
 }

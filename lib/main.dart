@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/providers/orders_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/authentication/authentication_screen.dart';
 import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
+import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:foodyeah/screens/core/products/product_detail.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/core/cart/cart_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +24,8 @@ class MyApp extends StatelessWidget {
         // a cada widget
         ChangeNotifierProvider(create: (ctx) => Products()),
         ChangeNotifierProvider(create: (ctx) => Customers()),
+        ChangeNotifierProvider(create: (ctx) => Cart()),
+        ChangeNotifierProvider(create: (ctx) => Orders())
       ],
       child: MaterialApp(
         title: 'FoodYeah',
@@ -31,7 +38,9 @@ class MyApp extends StatelessWidget {
           //nombre : funcion de flutter => Qué renderiza
           Home.routeName: (ctx) => Home(), //pagina principal
           MenuSemanal.routeName: (ctx) => MenuSemanal(),
-          ProductDetail.routeName: (ctx) => ProductDetail()
+          ProductDetail.routeName: (ctx) => ProductDetail(),
+          CartScreen.routeName: (ctx) => CartScreen(),
+          OrdersScreen.routeName: (ctx) => OrdersScreen()
         },
       ),
     );

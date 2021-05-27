@@ -27,7 +27,7 @@ class _FadeAnimationState extends State<FadeAnimation>
       animateYDirection = 1;
     }
 
-    super.initState();
+    
     controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: widget.duration));
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(controller!);
@@ -35,6 +35,7 @@ class _FadeAnimationState extends State<FadeAnimation>
         Tween<Offset>(begin: Offset(0, animateYDirection), end: Offset(0, 0))
             .animate(controller!);
     controller!.forward();
+    super.initState();
   }
 
   @override

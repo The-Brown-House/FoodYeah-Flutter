@@ -1,7 +1,7 @@
-class Product_Category {
+class ProductCategory {
   final String? id;
   final String? name;
   final String? description;
 
-  Product_Category(this.id, this.name, this.description);
+  ProductCategory(this.id, this.name, this.description);
 }
