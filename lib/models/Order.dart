@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:foodyeah/models/Customer.dart';
+import 'package:foodyeah/models/QuoteDetail.dart';
 
 import 'OrderDetail.dart';
 
@@ -45,4 +44,11 @@ class Order {
       orderDetails: orderDetails,
     );
   }
+}
+
+class CreateOrderDto {
+  final int customerId;
+  final List<OrderDetailCreateDto> orderDetails;
+  final QuoteDetail quoteDetails;
+  CreateOrderDto(this.customerId, this.orderDetails, this.quoteDetails);
 }

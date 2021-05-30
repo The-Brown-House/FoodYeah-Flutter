@@ -16,8 +16,7 @@ class LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm>
-    with SingleTickerProviderStateMixin {
+class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
   bool loader = false;
@@ -120,6 +119,7 @@ class _LoginFormState extends State<LoginForm>
                       height: 30,
                     ),
                     OpenContainer(
+                      routeSettings: RouteSettings(name: Home.routeName),
                       transitionDuration: Duration(seconds: 1),
                       transitionType: transitionType,
                       closedElevation: 0,

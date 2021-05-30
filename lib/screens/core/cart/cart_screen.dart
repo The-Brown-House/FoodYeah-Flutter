@@ -1,19 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:foodyeah/models/Order.dart';
+import 'package:foodyeah/models/OrderDetail.dart';
 import 'package:foodyeah/models/Product.dart';
+import 'package:foodyeah/models/QuoteDetail.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
+import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/providers/orders_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/core/cart/cart_item.dart';
 import 'package:provider/provider.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen();
 
   static const routeName = "/cart";
+
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+    }
+
     var cartProvider = Provider.of<Cart>(context);
     var productProvider = Provider.of<Products>(context);
+    var orderProvider = Provider.of<Orders>(context);
+    var customerProvider = Provider.of<Customers>(context);
+
+    void createOrder() async {
+      setState(() {
+        loading = true;
+      });
+      var cart = cartProvider.items;
+      var customerdata = await customerProvider.getDataFromJwt();
+      var customer =
+          await customerProvider.getCustomerByEmail(customerdata['email']);
+      QuoteDetail quoteDetails =
+          new QuoteDetail(int.parse(customer.customerId!));
+
+      List<OrderDetailCreateDto> details = [];
+      cart.forEach((key, value) {
+        OrderDetailCreateDto orderCreated = OrderDetailCreateDto(
+            productId: int.parse(value.productId!), quantity: value.quantity);
+        details.add(orderCreated);
+      });
+
+      CreateOrderDto createOrderDto = CreateOrderDto(
+          int.parse(customer.customerId!), details, quoteDetails);
+      orderProvider.createOrder(createOrderDto, context).then((value) {
+        if (value) {
+          cartProvider.clear();
+          setState(() {
+            loading = false;
+          });
+        } else {
+          setState(() {
+            loading = false;
+          });
+          return;
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Carrito de compras"),
@@ -51,7 +106,9 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        createOrder();
+                      },
                       child: Text(
                         "Registre su orden",
                         style: TextStyle(color: Theme.of(context).primaryColor),
@@ -67,6 +124,16 @@ class CartScreen extends StatelessWidget {
             Text(
               "Carrito de compras",
             ),
+            if (loading)
+              Container(
+                padding: EdgeInsets.all(4),
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+              ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.65,
@@ -118,7 +185,7 @@ class CartScreen extends StatelessWidget {
                 },
                 itemCount: cartProvider.itemCount,
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodyeah/common/Messages.dart';
 
 class NotificationService {
   void showSnackbar(BuildContext context, String message, String type,
@@ -12,7 +11,7 @@ class NotificationService {
       background = Colors.green.shade800;
     }
 
-    if (message == Messages().successAddCart) {}
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: background,

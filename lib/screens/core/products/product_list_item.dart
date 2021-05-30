@@ -38,7 +38,7 @@ class _ProductListItemState extends State<ProductListItem>
         tag: Key(widget.product!.imageUrl.toString()),
         child: Container(
             height: double.infinity,
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             margin: EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -57,62 +57,75 @@ class _ProductListItemState extends State<ProductListItem>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            FadeAnimation(
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  child: Text(title,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.varelaRound(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                600,
+                                1),
+                            FadeAnimation(
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Text(
+                                    "S/" + price,
+                                    style: GoogleFonts.varelaRound(
+                                        color: Colors.white, fontSize: 25),
+                                  ),
+                                ),
+                                800,
+                                1),
+                          ],
+                        ),
+                        Column(children: [
                           FadeAnimation(
-                              Text(title,
-                                  style: GoogleFonts.varelaRound(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold)),
-                              600,
-                              1),
-                          FadeAnimation(
-                              Text(
-                                "S/" + price,
-                                style: GoogleFonts.varelaRound(
-                                    color: Colors.white, fontSize: 25),
+                              SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: Center(
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          primary: Colors.transparent),
+                                      onPressed: () {
+                                        cartProvider.addItem(
+                                            widget.product!.id!,
+                                            widget.product!.price!);
+                                        NotificationService().showSnackbar(
+                                            context,
+                                            Messages().successAddCart,
+                                            "success",
+                                            SnackBarAction(
+                                                label: "Deshacer",
+                                                onPressed: () {
+                                                  cartProvider.removeItem(
+                                                      widget.product!.id!);
+                                                }));
+                                      },
+                                      child: Icon(Icons.shopping_cart)),
+                                ),
                               ),
-                              800,
+                              700,
                               1),
-                        ],
-                      ),
-                      Column(children: [
-                        FadeAnimation(
-                            SizedBox(
-                              width: 60,
-                              height: 60,
-                              child: Center(
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 0,
-                                        primary: Colors.transparent),
-                                    onPressed: () {
-                                      cartProvider.addItem(widget.product!.id!,
-                                          widget.product!.price!);
-                                      NotificationService().showSnackbar(
-                                          context,
-                                          Messages().successAddCart,
-                                          "success",
-                                          SnackBarAction(
-                                              label: "Deshacer",
-                                              onPressed: () {
-                                                cartProvider.removeItem(
-                                                    widget.product!.id!);
-                                              }));
-                                    },
-                                    child: Icon(Icons.shopping_cart)),
-                              ),
-                            ),
-                            700,
-                            1),
-                      ])
-                    ],
+                        ])
+                      ],
+                    ),
                   ),
                 ],
               ),
