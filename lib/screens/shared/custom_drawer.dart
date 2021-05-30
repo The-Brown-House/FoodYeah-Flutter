@@ -28,9 +28,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ListTile(
               leading: Icon(Icons.shop),
               title: FadeAnimation(
-                  Text("Shop", style: GoogleFonts.varelaRound()), 300, 1),
+                  Text("Home", style: GoogleFonts.varelaRound()), 300, 1),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed('/');
+                Navigator.of(context).pushReplacementNamed('/home');
               },
             ),
             Divider(),
