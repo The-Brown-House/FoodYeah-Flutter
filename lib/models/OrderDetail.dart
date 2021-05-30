@@ -1,12 +1,15 @@
-import 'package:foodyeah/models/Order.dart';
-
-import 'Product.dart';
-
 class OrderDetailCreateDto {
-  final String? productId;
-  final double? quantity;
+  final int? productId;
+  final int? quantity;
 
   OrderDetailCreateDto({this.productId, this.quantity});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "productId": this.productId,
+      "quantity": this.quantity,
+    };
+  }
 }
 
 class OrderDetail {

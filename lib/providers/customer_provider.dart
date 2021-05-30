@@ -77,4 +77,10 @@ class Customers with ChangeNotifier {
     Map<String, dynamic> payload = Jwt.parseJwt(token);
     return payload;
   }
+
+  Future<Customer> getCustomerByEmail(String email) async {
+    var uri = Uri.parse(Constants().url + "customers/email/" + email);
+    var response = await http.get(uri, headers: headers);
+    return Customer.fromJson(jsonDecode(response.body));
+  }
 }

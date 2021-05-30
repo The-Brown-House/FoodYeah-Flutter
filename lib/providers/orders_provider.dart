@@ -2,8 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:foodyeah/common/Constants.dart';
+import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Order.dart';
+import 'package:foodyeah/models/QuoteDetail.dart';
+import 'package:foodyeah/providers/cart_provider.dart';
+import 'package:foodyeah/services/notification_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class Orders with ChangeNotifier {
   final String apiurl = Constants().url + "orders";
@@ -22,5 +27,28 @@ class Orders with ChangeNotifier {
       return items;
     }
     return [];
+  }
+
+  Future<bool> createOrder(CreateOrderDto order, context) async {
+    var uri = Uri.parse(apiurl);
+
+    List orderDetails =
+        order.orderDetails.map((order) => order.toJson()).toList();
+
+    var body = jsonEncode({
+      'customerId': order.customerId,
+      'orderDetails': orderDetails,
+      'quoteDetails': order.quoteDetails.toJson()
+    });
+    var response = await http.post(uri, body: body, headers: headers);
+    if (response.statusCode == 200) {
+      NotificationService().showSnackbar(
+          context, Messages().successOrderConfirmed, "success", null);
+      return true;
+    } else {
+      NotificationService()
+          .showSnackbar(context, Messages().errorOrderReject, "error", null);
+      return false;
+    }
   }
 }
