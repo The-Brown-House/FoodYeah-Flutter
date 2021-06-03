@@ -83,4 +83,16 @@ class Customers with ChangeNotifier {
     var response = await http.get(uri, headers: headers);
     return Customer.fromJson(jsonDecode(response.body));
   }
+
+  Future<List<CustomerLOC>> getCustomersLOC() async{
+    var uri = Uri.parse(Constants().url + "customers/onlycustomers");
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      var itemsJson = body['items'] as List;
+      var items = itemsJson.map((e) => CustomerLOC.fromJson(e)).toList();
+      return items;
+    }
+    return [];
+  }
 }

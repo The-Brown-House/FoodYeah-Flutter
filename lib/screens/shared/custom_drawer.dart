@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
+import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -52,6 +53,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
               onTap: () {},
             ),
             Divider(),
+            ListTile(
+              leading: Icon(Icons.list),
+              title: FadeAnimation(
+                  Text("Customers", style: GoogleFonts.varelaRound()),
+                  900,
+                  1),
+              onTap: () {
+                Navigator.of(context).pushNamed(CustomersScreen.routeName);
+              },
+            ),
           ],
         ),
       ),
