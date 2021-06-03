@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
+import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatefulWidget {
   final Color? color;
@@ -13,8 +15,38 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+  Map<String, dynamic>? data;
+  bool isAdmin = false;
+
+  Widget getListItem(name, icon, function, time) {
+    return Column(
+      children: [
+        Divider(),
+        ListTile(
+          leading: Icon(icon),
+          title: FadeAnimation(
+              Text(name, style: GoogleFonts.varelaRound()), time, 1),
+          onTap: function,
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<Customers>(context).getDataFromJwt().then((value) {
+      data = value;
+      if (data!['role'] == "USER") {
+        setState(() {
+          isAdmin = false;
+        });
+      } else {
+        setState(() {
+          isAdmin = true;
+        });
+      }
+    });
+
     return ClipRRect(
       borderRadius: BorderRadius.only(
           topRight: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
@@ -27,11 +59,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 backgroundColor: widget.color),
             Divider(),
             ListTile(
-              leading: Icon(Icons.shop),
+              leading: Icon(Icons.home),
               title: FadeAnimation(
                   Text("Home", style: GoogleFonts.varelaRound()), 300, 1),
               onTap: () {
-                Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/home', (route) => false);
               },
             ),
             Divider(),
@@ -43,26 +76,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Navigator.of(context).pushNamed(OrdersScreen.routeName);
               },
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: FadeAnimation(
-                  Text("Product Management", style: GoogleFonts.varelaRound()),
-                  900,
-                  1),
-              onTap: () {},
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.list),
-              title: FadeAnimation(
-                  Text("Customers", style: GoogleFonts.varelaRound()),
-                  900,
-                  1),
-              onTap: () {
+            if (isAdmin)
+              getListItem("Product Management", Icons.settings, () {}, 900),
+            if (isAdmin)
+              getListItem("Customers", Icons.face, () {
                 Navigator.of(context).pushNamed(CustomersScreen.routeName);
-              },
-            ),
+              }, 900),
+            getListItem("Log Out", Icons.logout, () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("/", (route) => false);
+            }, 900)
           ],
         ),
       ),

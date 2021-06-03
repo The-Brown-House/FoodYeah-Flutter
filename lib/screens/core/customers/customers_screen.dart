@@ -18,7 +18,6 @@ class CustomersScreen extends StatefulWidget {
 }
 
 class _CustomersScreenState extends State<CustomersScreen> {
-  
   @override
   Widget build(BuildContext context) {
     var customerProvider = Provider.of<Customers>(context);
@@ -72,13 +71,14 @@ class _CustomersScreenState extends State<CustomersScreen> {
                   ),
                   600,
                   1),
-                  Container(
+              Container(
                 child: FutureBuilder(
                   future: customerProvider.getCustomersLOC(),
                   builder: (ctx, snapshot) {
                     if (snapshot.hasData) {
                       if (snapshot.data != null) {
-                        List<CustomerLOC> items = snapshot.data as List<CustomerLOC>;
+                        List<CustomerLOC> items =
+                            snapshot.data as List<CustomerLOC>;
 
                         if (items.length > 0) {
                           return Container(

@@ -15,14 +15,22 @@ class Customer {
         lastname: customerJson['customerLastName']);
   }
 }
+
 class CustomerLOC {
   final String? customerId;
   final String? firstname;
   final String? lastname;
   final String? email;
-  final double? loc;
+  final double? availibleloc;
+  final double? totalloc;
 
-  CustomerLOC({this.email, this.firstname, this.lastname, this.customerId, this.loc});
+  CustomerLOC(
+      {this.email,
+      this.firstname,
+      this.lastname,
+      this.customerId,
+      this.availibleloc,
+      this.totalloc});
   factory CustomerLOC.fromJson(dynamic json) {
     Map<String, dynamic> customerJson = json;
 
@@ -31,7 +39,8 @@ class CustomerLOC {
         email: customerJson['userEmail'],
         firstname: customerJson['customerName'],
         lastname: customerJson['customerLastName'],
-        loc: customerJson['loc']['avalibleLineOfCredit']);
+        availibleloc: customerJson['loc']['avalibleLineOfCredit'],
+        totalloc: customerJson['loc']['totalLineOfCredit']);
   }
 }
 

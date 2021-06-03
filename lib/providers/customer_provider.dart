@@ -84,7 +84,7 @@ class Customers with ChangeNotifier {
     return Customer.fromJson(jsonDecode(response.body));
   }
 
-  Future<List<CustomerLOC>> getCustomersLOC() async{
+  Future<List<CustomerLOC>> getCustomersLOC() async {
     var uri = Uri.parse(Constants().url + "customers/onlycustomers");
     var response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
@@ -94,5 +94,10 @@ class Customers with ChangeNotifier {
       return items;
     }
     return [];
+  }
+
+  void logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }
