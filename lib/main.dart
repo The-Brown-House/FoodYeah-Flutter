@@ -4,6 +4,7 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/providers/orders_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/authentication/authentication_screen.dart';
+import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
           MenuSemanal.routeName: (ctx) => MenuSemanal(),
           ProductDetail.routeName: (ctx) => ProductDetail(),
           CartScreen.routeName: (ctx) => CartScreen(),
-          OrdersScreen.routeName: (ctx) => OrdersScreen()
+          OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          CustomersScreen.routeName: (ctx) => CustomersScreen(),
         },
       ),
     );
