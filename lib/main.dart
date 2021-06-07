@@ -8,6 +8,7 @@ import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:foodyeah/screens/core/products/product_detail.dart';
+import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/core/cart/cart_screen.dart';
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
           MenuSemanal.routeName: (ctx) => MenuSemanal(),
           ProductDetail.routeName: (ctx) => ProductDetail(),
           CartScreen.routeName: (ctx) => CartScreen(),
-          OrdersScreen.routeName: (ctx) => OrdersScreen()
+          OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          CustomerScreen.routeName: (ctx) => CustomerScreen()
         },
       ),
     );
