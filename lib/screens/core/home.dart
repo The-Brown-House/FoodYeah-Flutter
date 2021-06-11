@@ -42,144 +42,129 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     var days = List.generate(5, (index) => index.toString());
 
     return Scaffold(
-        drawer: CustomDrawer(Colors.redAccent),
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.redAccent,
-          elevation: 0,
-          title: Image(
-            image: AssetImage('assets/icon/icon.png'),
-            width: 50,
-            height: 50,
-          ),
-          actions: [
-            Padding(
-                padding: EdgeInsets.all(5),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
-                )),
-            Consumer<Cart>(
-              builder: (_, cart, ch) =>
-                  Badge(child: ch, value: cart.itemCount.toString()),
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(CartScreen.routeName);
-                },
+      drawer: CustomDrawer(Colors.redAccent),
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.redAccent,
+        elevation: 0,
+        title: Image(
+          image: AssetImage('assets/icon/icon.png'),
+          width: 50,
+          height: 50,
+        ),
+        actions: [
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
+              )),
+          Consumer<Cart>(
+            builder: (_, cart, ch) =>
+                Badge(child: ch, value: cart.itemCount.toString()),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          )
+        ],
+        automaticallyImplyLeading: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            FadeAnimation(
+                FutureBuilder(
+                  builder: (ctx, snapshot) {
+                    if (snapshot.data != null) {
+                      var data = snapshot.data as Map<String, dynamic>;
+                      return Padding(
+                        padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                        child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "Bienvenido, " + data['unique_name'],
+                              style: GoogleFonts.varelaRound(fontSize: 25),
+                            )),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  },
+                  future: values,
+                ),
+                1000,
+                1),
+            FadeAnimation(
+              Padding(
+                padding: EdgeInsets.only(left: 15, top: 20, right: 15),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    ),
+                    filled: true,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: 10.0),
+                      child: Icon(
+                        Icons.search,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                    fillColor: Colors.white,
+                    hintStyle: new TextStyle(color: Colors.grey, fontSize: 18),
+                    hintText: "Busca un platillo",
+                  ),
+                ),
               ),
-            )
+              1000,
+              1,
+            ),
+            //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
+            SizedBox(
+              height: 20,
+            ),
+            FadeAnimation(
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Nuestro menú",
+                        style: GoogleFonts.varelaRound(fontSize: 20)),
+                  ),
+                ),
+                1200,
+                1),
+            FadeAnimation(
+                Container(
+                    width: 500,
+                    height: 100,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index) => MenuDayCard(index),
+                      itemCount: days.length,
+                    )),
+                1500,
+                1),
+            FadeAnimation(
+                Padding(
+                  padding: EdgeInsets.only(top: 25.0, left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Platillos a la carta",
+                        style: GoogleFonts.varelaRound(fontSize: 20)),
+                  ),
+                ),
+                1500,
+                1),
+            FadeAnimation(MenuCarta(), 1500, 1),
           ],
-          automaticallyImplyLeading: true,
         ),
-        body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  FadeAnimation(
-                      FutureBuilder(
-                        builder: (ctx, snapshot) {
-                          if (snapshot.data != null) {
-                            var data = snapshot.data as Map<String, dynamic>;
-                            return Padding(
-                              padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                              child: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "Bienvenido, " + data['unique_name'],
-                                    style: GoogleFonts.varelaRound(fontSize: 25),
-                                  )),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        },
-                        future: values,
-                      ),
-                      1000,
-                      1),
-                  FadeAnimation(
-                      Padding(
-                        padding: EdgeInsets.only(left: 15,top: 20,right: 15),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                            ),
-                            filled: true,
-                            prefixIcon: Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.redAccent,
-                              ),
-                            ),
-                            fillColor: Colors.white,
-                            hintStyle: new TextStyle(color: Colors.grey, fontSize: 18),
-                            hintText: "Busca un platillo",
-                          ),
-                        ),
-                      ),
-                    1000,
-                      1,
-                  ),
-                  //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FadeAnimation(
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Nuestro menú",
-                              style: GoogleFonts.varelaRound(fontSize: 20)),
-                        ),
-                      ),
-                      1200,
-                      1),
-                  FadeAnimation(
-                      Container(
-                          width: 500,
-                          height: 100,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (ctx, index) => MenuDayCard(index),
-                            itemCount: days.length,
-                          )),
-                      1500,
-                      1),
-                  FadeAnimation(
-                      Padding(
-                        padding: EdgeInsets.only(top: 25.0, left: 20.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Platillos a la carta",
-                              style: GoogleFonts.varelaRound(fontSize: 20)),
-                        ),
-                      ),
-                      1500,
-                      1),
-                  FadeAnimation(
-                      MenuCarta(),
-                      1500,
-                      1),
-                  FadeAnimation(
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text("Mis Pedidos",
-                              style: GoogleFonts.varelaRound(fontSize: 20)),
-                        ),
-                      ),
-                      1500,
-                      1),
-                ],
-              ),
-        ),
-        bottomNavigationBar: BottomNavBarWidget(),
+      ),
     );
   }
 }

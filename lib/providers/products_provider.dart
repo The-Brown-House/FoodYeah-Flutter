@@ -34,4 +34,16 @@ class Products with ChangeNotifier {
     return new Product(
         id: "", imageUrl: "", name: "", price: 0, sellDay: "0", stock: 1);
   }
+
+  Future<List<Product>> getProductByCategoryId(int id) async {
+    var uri = Uri.parse(apiurl + "/category/" + id.toString());
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      var itemsJson = body['items'] as List;
+      var items = itemsJson.map((e) => Product.fromJson(e)).toList();
+      return items;
+    }
+    return [];
+  }
 }
