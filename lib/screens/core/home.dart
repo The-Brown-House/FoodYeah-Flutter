@@ -5,6 +5,7 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:foodyeah/screens/core/menu/menu_carta.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
+import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:foodyeah/screens/shared/bottom_navigation_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -55,12 +56,25 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           height: 50,
         ),
         actions: [
-          Padding(
-              padding: EdgeInsets.all(5),
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
-              )),
+          TextButton(
+            child: Padding(
+                padding: EdgeInsets.all(5),
+                child: Hero(
+                  tag: 'AnimationSpeed',
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
+                  ),
+                )),
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 750),
+                    pageBuilder: (_, __, ___) => CustomerScreen()),
+              );
+            },
+          ),
           Consumer<Cart>(
             builder: (_, cart, ch) =>
                 Badge(child: ch, value: cart.itemCount.toString()),
