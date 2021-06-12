@@ -68,7 +68,7 @@ class ProductSearchDelegate extends SearchDelegate<Product>{
         return ListTile(
           title: Text(producto.name!),
           subtitle: Text('S/ ' + producto.price.toString()),
-          trailing: Image.network(producto.imageUrl!),
+          trailing: CircleAvatar(backgroundImage: NetworkImage(producto.imageUrl!)),
           onTap: () {
             Navigator.of(context)
                 .pushNamed(ProductDetail.routeName, arguments: producto);
