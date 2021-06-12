@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
+import 'package:foodyeah/models/Product.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:foodyeah/screens/core/menu/menu_carta.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
-import 'package:foodyeah/screens/core/customer/customer_screen.dart';
+import 'package:foodyeah/screens/core/products/product_search.dart';
 import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
+
+  late Product productoSeleccionado;
+  List<Product> record=[];
+
   @override
   void initState() {
     super.initState();
@@ -57,25 +62,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           height: 50,
         ),
         actions: [
-          TextButton(
-            child: Padding(
-                padding: EdgeInsets.all(5),
-                child: Hero(
-                  tag: 'AnimationSpeed',
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
-                  ),
-                )),
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                    transitionDuration: Duration(milliseconds: 750),
-                    pageBuilder: (_, __, ___) => CustomerScreen()),
-              );
-            },
-          ),
+          Padding(
+              padding: EdgeInsets.all(5),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
+              )),
           Consumer<Cart>(
             builder: (_, cart, ch) =>
                 Badge(child: ch, value: cart.itemCount.toString()),
@@ -117,24 +109,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             FadeAnimation(
               Padding(
                 padding: EdgeInsets.only(left: 15, top: 20, right: 15),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    ),
-                    filled: true,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 10.0),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                    fillColor: Colors.white,
-                    hintStyle: new TextStyle(color: Colors.grey, fontSize: 18),
-                    hintText: "Busca un platillo",
-                  ),
-                ),
+                child: MaterialButton(
+                    child: Text('Busca un platillo', style: GoogleFonts.varelaRound(fontSize: 14)),
+                    shape: StadiumBorder(),
+                    elevation: 0,
+                    splashColor: Colors.transparent,
+                    color: Colors.blue,
+                    onPressed: () async {
+                      final producto = await showSearch(
+                          context: context,
+                          delegate: ProductSearchDelegate('Busca un platillo...', record)
+                      );
+
+                      setState(() {
+                        this.productoSeleccionado = producto as Product;
+                        this.record.insert(0, producto);
+                      });
+                    }
+                )
               ),
               1000,
               1,
