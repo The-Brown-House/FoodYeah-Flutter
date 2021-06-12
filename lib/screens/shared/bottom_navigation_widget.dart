@@ -6,8 +6,12 @@ class BottomNavBarWidget extends StatefulWidget {
 }
 
 class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
+  Map<String, dynamic>? data;
+  bool isAdmin = false;
+
   @override
   Widget build(BuildContext context) {
+
     int _selectedIndex = 0;
     void _onItemTapped(int index) {
       setState(() {
@@ -18,18 +22,11 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home'
-        ),
+            icon: Icon(Icons.local_restaurant), label: 'Mis Pedidos'),
         BottomNavigationBarItem(
-          icon: Icon(Icons.local_restaurant),
-          label: 'Mis Pedidos'
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Mi Cuenta'
-        ),
+            icon: Icon(Icons.account_circle), label: 'Mi Cuenta'),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Color(0xFFfd5352),

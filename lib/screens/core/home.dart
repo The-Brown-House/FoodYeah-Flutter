@@ -4,13 +4,14 @@ import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:foodyeah/screens/core/menu/menu_carta.dart';
-import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:foodyeah/screens/shared/bottom_navigation_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:foodyeah/screens/core/cart/badge.dart';
 import 'package:foodyeah/screens/core/cart/cart_screen.dart';
+
+import 'orders/orders_home.dart';
 
 class Home extends StatefulWidget {
   Home();
@@ -162,6 +163,19 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 1500,
                 1),
             FadeAnimation(MenuCarta(), 1500, 1),
+            FadeAnimation(
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Mis Pedidos",
+                        style: GoogleFonts.varelaRound(fontSize: 20)),
+                  ),
+                ),
+                1500,
+                1),
+            FadeAnimation(
+                OrdersHome(), 1500, 1)
           ],
         ),
       ),
