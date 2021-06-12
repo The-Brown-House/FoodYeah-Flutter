@@ -46,4 +46,15 @@ class Products with ChangeNotifier {
     }
     return [];
   }
+
+  Future getProductByName(String name) async {
+    var uri = Uri.parse(apiurl + "/search/$name");
+    var response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+      var itemsJson = body['items'] as List;
+      var items = itemsJson.map((e) => Product.fromJson(e)).toList();
+      return items;
+    }
+  }
 }

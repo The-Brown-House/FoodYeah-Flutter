@@ -9,7 +9,6 @@ import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:foodyeah/screens/core/products/product_detail.dart';
-import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/core/cart/cart_screen.dart';
@@ -17,6 +16,8 @@ import 'screens/core/cart/cart_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -44,7 +45,6 @@ class MyApp extends StatelessWidget {
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
           CustomersScreen.routeName: (ctx) => CustomersScreen(),
-          CustomerScreen.routeName: (ctx) => CustomerScreen()
         },
       ),
     );
