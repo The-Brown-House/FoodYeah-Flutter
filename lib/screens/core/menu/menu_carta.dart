@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/models/Product.dart';
 import 'package:foodyeah/providers/products_provider.dart';
-import 'package:foodyeah/screens/core/cart/cart_screen.dart';
 import 'package:foodyeah/screens/core/products/product_detail.dart';
 import 'package:foodyeah/screens/core/products/product_list_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +26,6 @@ class _MenuCartaState extends State<MenuCarta> {
               if (snapshot.data != null) {
                 var items = snapshot.data as List<Product>;
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   height: MediaQuery.of(context).size.height * 0.35,
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(

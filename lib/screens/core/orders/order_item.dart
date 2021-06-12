@@ -17,10 +17,11 @@ class _OrderItemState extends State<OrderItem> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      width: double.infinity,
+      width: 300,
       height: 200,
       child: FadeAnimation(
           Card(
+            elevation: 0,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: Container(
@@ -70,7 +71,10 @@ class _OrderItemState extends State<OrderItem> {
                                               orderDetails![indx]
                                                   .productImageUrl!),
                                         ),
-                                        Text(orderDetails[indx].productName!),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 10.0),
+                                          child: Text(orderDetails[indx].productName!),
+                                        ),
                                       ],
                                     ),
                                   ),
