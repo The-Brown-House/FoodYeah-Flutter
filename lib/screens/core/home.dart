@@ -25,9 +25,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
-
-  late Product productoSeleccionado;
-  List<Product> record=[];
+  late Product? productoSeleccionado;
+  List<Product> record = [];
 
   @override
   void initState() {
@@ -107,31 +106,47 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 1000,
                 1),
             FadeAnimation(
-              Padding(
-                padding: EdgeInsets.only(left: 15, top: 20, right: 15),
-                child: MaterialButton(
-                    child: Text('Busca un platillo', style: GoogleFonts.varelaRound(fontSize: 14)),
-                    shape: StadiumBorder(),
-                    elevation: 0,
-                    splashColor: Colors.transparent,
-                    color: Colors.blue,
-                    onPressed: () async {
-                      final producto = await showSearch(
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width,
+                  height: 80,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      ),
+                      filled: true,
+                      prefixIcon: Padding(
+                        padding: EdgeInsets.only(left: 10.0),
+                        child: Icon(
+                          Icons.search,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      hintStyle:
+                          new TextStyle(color: Colors.grey, fontSize: 18),
+                      hintText: "Busca un platillo",
+                    ),
+                    onTap: () async {
+                      final product = await showSearch(
                           context: context,
-                          delegate: ProductSearchDelegate('Busca un platillo...', record)
-                      );
+                          delegate: ProductSearchDelegate(
+                              'Busca un platillo...', record));
 
-                      setState(() {
-                        this.productoSeleccionado = producto as Product;
-                        this.record.insert(0, producto);
-                      });
-                    }
-                )
-              ),
-              1000,
-              1,
-            ),
-            //Aca el tiempo de la animacion es mas larga porque demora en entrar al widget
+                      if (product != null) {
+                        Product? isOn = this
+                            .record
+                            .firstWhere((element) => element.id == product.id);
+                        if (isOn == null) {
+                          this.record.insert(0, product);
+                        }
+                      }
+                    },
+                  ),
+                ),
+                1000,
+                1),
             SizedBox(
               height: 20,
             ),
