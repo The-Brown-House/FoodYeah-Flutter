@@ -4,6 +4,7 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/providers/orders_provider.dart';
 import 'package:foodyeah/providers/products_provider.dart';
 import 'package:foodyeah/screens/authentication/authentication_screen.dart';
+import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/screens/core/menu/menu_semanal.dart';
@@ -16,8 +17,6 @@ import 'screens/core/cart/cart_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -37,14 +36,13 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.blueGrey.shade50),
         home: AuthenticationScreen(), //pagina por defecto
         routes: {
-          //aca para routear se pone el nombre de la ruta y qué va a renderizar
-          //nombre : funcion de flutter => Qué renderiza
           Home.routeName: (ctx) => Home(), //pagina principal
           MenuSemanal.routeName: (ctx) => MenuSemanal(),
           ProductDetail.routeName: (ctx) => ProductDetail(),
           CartScreen.routeName: (ctx) => CartScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
           CustomersScreen.routeName: (ctx) => CustomersScreen(),
+          CustomerScreen.routeName: (ctx) => CustomerScreen()
         },
       ),
     );

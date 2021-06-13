@@ -3,6 +3,7 @@ import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:foodyeah/screens/core/menu/menu_carta.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
@@ -61,12 +62,24 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           height: 50,
         ),
         actions: [
-          Padding(
-              padding: EdgeInsets.all(5),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 750),
+                    pageBuilder: (_, __, ___) => CustomerScreen()),
+              );
+            },
+            child: Hero(
+              tag: Key("AvatarPhoto"),
               child: CircleAvatar(
+                radius: 20.0,
                 backgroundImage: NetworkImage(
-                    "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
-              )),
+                    'https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg'),
+              ),
+            ),
+          ),
           Consumer<Cart>(
             builder: (_, cart, ch) =>
                 Badge(child: ch, value: cart.itemCount.toString()),
