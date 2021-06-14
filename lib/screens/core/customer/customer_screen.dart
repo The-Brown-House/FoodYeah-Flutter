@@ -36,9 +36,13 @@ class _CustomerScreenState extends State<CustomerScreen> {
             Hero(
               tag: Key("AvatarPhoto"),
               child: CircleAvatar(
-                radius: 100.0,
-                backgroundImage: NetworkImage(
-                    'https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg'),
+                backgroundColor: Colors.white,
+                radius: 90.0,
+                child: Icon(
+                  Icons.face,
+                  size: 90,
+                  color: Colors.black,
+                ),
               ),
             ),
             FutureBuilder(

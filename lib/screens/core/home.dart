@@ -74,9 +74,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             child: Hero(
               tag: Key("AvatarPhoto"),
               child: CircleAvatar(
+                backgroundColor: Colors.white,
                 radius: 20.0,
-                backgroundImage: NetworkImage(
-                    'https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg'),
+                child: Icon(
+                  Icons.face,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
