@@ -120,7 +120,7 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                     ),
                     OpenContainer(
                       routeSettings: RouteSettings(name: Home.routeName),
-                      transitionDuration: Duration(seconds: 1),
+                      transitionDuration: Duration(milliseconds: 750),
                       transitionType: transitionType,
                       closedElevation: 0,
                       openElevation: 0,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Order.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';

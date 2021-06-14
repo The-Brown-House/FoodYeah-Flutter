@@ -4,11 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:foodyeah/common/Constants.dart';
 import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Order.dart';
-import 'package:foodyeah/models/QuoteDetail.dart';
-import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class Orders with ChangeNotifier {
   final String apiurl = Constants().url + "orders";

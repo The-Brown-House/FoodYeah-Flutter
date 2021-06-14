@@ -72,7 +72,8 @@ class CartItems extends StatelessWidget {
                               CircleAvatar(
                                 backgroundImage: NetworkImage(imageUrl),
                               ),
-                              Text('${title}'),
+                              Text(title.toString()),
+                              // ignore: unnecessary_brace_in_string_interps
                               Text('\S/${price} x${quantity}')
                             ],
                           ),

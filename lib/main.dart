@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
@@ -14,7 +15,10 @@ import 'package:provider/provider.dart';
 
 import 'screens/core/cart/cart_screen.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

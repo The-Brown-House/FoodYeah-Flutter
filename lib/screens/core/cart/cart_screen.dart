@@ -28,10 +28,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     @override
-    void initState() {
-      super.initState();
-    }
-
     var cartProvider = Provider.of<Cart>(context);
     var productProvider = Provider.of<Products>(context);
     var orderProvider = Provider.of<Orders>(context);
@@ -87,136 +83,146 @@ class _CartScreenState extends State<CartScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: [
-            Card(
-              margin: EdgeInsets.all(15),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Spacer(),
-                    Consumer<Cart>(
-                      builder: (_, cart, child) => Chip(
-                        label: Text('\S/${cart.totalAmount}',
-                            style: TextStyle(
-                              color: Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyText1!
-                                  .color,
-                            )),
-                        backgroundColor: Theme.of(context).primaryColor,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Card(
+                margin: EdgeInsets.all(15),
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total",
+                        style: TextStyle(fontSize: 20),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        createOrder();
-                      },
-                      child: Text(
-                        "Registre su orden",
-                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      SizedBox(
+                        width: 10,
                       ),
-                    )
-                  ],
+                      Spacer(),
+                      Consumer<Cart>(
+                        builder: (_, cart, child) => Chip(
+                          label: Text('\S/${cart.totalAmount}',
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .primaryTextTheme
+                                    .bodyText1!
+                                    .color,
+                              )),
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          createOrder();
+                        },
+                        child: Text(
+                          "Registre su orden",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Carrito de compras",
-            ),
-            if (loading)
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Carrito de compras",
+              ),
+              if (loading)
+                Container(
+                  padding: EdgeInsets.all(4),
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  ),
+                ),
               Container(
-                padding: EdgeInsets.all(4),
-                width: 50,
-                height: 50,
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                ),
-              ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.65,
-              child: cartProvider.itemCount > 0
-                  ? ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (ctx, index) {
-                        return FutureBuilder(
-                          future: productProvider.getProductById(cartProvider
-                              .items.values
-                              .toList()[index]
-                              .productId!),
-                          builder: (ctx, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data != null) {
-                                var product = snapshot.data as Product;
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.65,
+                child: cartProvider.itemCount > 0
+                    ? ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (ctx, index) {
+                          return FutureBuilder(
+                            future: productProvider.getProductById(cartProvider
+                                .items.values
+                                .toList()[index]
+                                .productId!),
+                            builder: (ctx, snapshot) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data != null) {
+                                  var product = snapshot.data as Product;
 
-                                return CartItems(
-                                    cartProvider.items.values
-                                        .toList()[index]
-                                        .productId!,
-                                    cartProvider.items.values
-                                        .toList()[index]
-                                        .price!,
-                                    cartProvider.items.values
-                                        .toList()[index]
-                                        .quantity!,
-                                    product.name.toString(),
-                                    product.imageUrl.toString());
+                                  return CartItems(
+                                      cartProvider.items.values
+                                          .toList()[index]
+                                          .productId!,
+                                      cartProvider.items.values
+                                          .toList()[index]
+                                          .price!,
+                                      cartProvider.items.values
+                                          .toList()[index]
+                                          .quantity!,
+                                      product.name.toString(),
+                                      product.imageUrl.toString());
+                                } else {
+                                  return Container(
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.8,
+                                    child: Text("Load"),
+                                  );
+                                }
                               } else {
-                                return Container(
-                                  width: double.infinity,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.8,
-                                  child: Text("Load"),
+                                return Center(
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    margin: EdgeInsets.only(top: 40),
+                                    child: CircularProgressIndicator(
+                                      backgroundColor: Colors.white,
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.blue),
+                                    ),
+                                  ),
                                 );
                               }
-                            } else {
-                              return Center(
-                                child: Container(
-                                  width: 50,
-                                  height: 50,
-                                  margin: EdgeInsets.only(top: 40),
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.white,
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            Colors.blue),
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                        );
-                      },
-                      itemCount: cartProvider.itemCount,
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Icon(
-                            Icons.remove_shopping_cart,
-                            size: 50,
-                          ),
-                          Text(
-                              "No ha agregado ningun producto al carrito de compras",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.varelaRound(fontSize: 25))
-                        ]),
-            ),
-          ],
+                            },
+                          );
+                        },
+                        itemCount: cartProvider.itemCount,
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                            Icon(
+                              Icons.remove_shopping_cart,
+                              size: 50,
+                            ),
+                            Text(
+                                "No ha agregado ningun producto al carrito de compras",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.varelaRound(fontSize: 25))
+                          ]),
+              ),
+              if (loading == false)
+                Text(
+                  "Deslizar a la izquierda para eliminar un producto",
+                  style: GoogleFonts.varelaRound(
+                    color: Colors.red,
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );

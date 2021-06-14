@@ -81,9 +81,9 @@ class _OrderItemState extends State<OrderItem> {
                                     ),
                                   ),
                                   Text(orderDetails[indx].quantity.toString() +
-                                      " x S/." +
+                                      " x S/" +
                                       orderDetails[indx].unitPrice.toString() +
-                                      " = S/." +
+                                      " = S/" +
                                       orderDetails[indx].totalPrice.toString())
                                 ],
                               ),
@@ -93,24 +93,28 @@ class _OrderItemState extends State<OrderItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
+                        Expanded(
                           child: Row(
                             children: [
                               Text("Precio Total: ",
                                   textAlign: TextAlign.left,
-                                  style: GoogleFonts.varelaRound(fontSize: 15)),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.varelaRound(fontSize: 12)),
                               Text(
                                 "S/." + widget.order.totalPrice.toString(),
+                                overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: GoogleFonts.varelaRound(fontSize: 15),
+                                style: GoogleFonts.varelaRound(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
                         ),
                         Container(
                           child: Text(widget.order.status.toString(),
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.varelaRound(
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: widget.order.status == "NOTDELIVERED"
                                       ? Colors.red
                                       : Colors.green.shade900)),

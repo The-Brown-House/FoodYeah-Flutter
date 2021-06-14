@@ -6,7 +6,6 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:foodyeah/screens/core/menu/days_card.dart';
 import 'package:foodyeah/screens/core/menu/menu_carta.dart';
-import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:foodyeah/screens/core/products/product_search.dart';
 import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "926686361265",
+    "firebase_url": "https://testingfirebaseflutter-dc486-default-rtdb.firebaseio.com",
+    "project_id": "testingfirebaseflutter-dc486",
+    "storage_bucket": "testingfirebaseflutter-dc486.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926686361265:android:0be0ead1141e90a3d51490",
+        "android_client_info": {
+          "package_name": "com.example.foodyeah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926686361265-tmis5110mqqb0nfnl38q533806r6olfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBagM47ZDpLF0ihJLBjFlKqeS8tzF8RLrM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926686361265-tmis5110mqqb0nfnl38q533806r6olfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
