@@ -6,6 +6,7 @@ import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/providers/orders_provider.dart';
 import 'package:foodyeah/screens/core/cart/badge.dart';
 import 'package:foodyeah/screens/core/cart/cart_screen.dart';
+import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -43,12 +44,27 @@ class _OrdersScreenState extends State<OrdersScreen> {
           height: 50,
         ),
         actions: [
-          Padding(
-              padding: EdgeInsets.all(5),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                    transitionDuration: Duration(milliseconds: 750),
+                    pageBuilder: (_, __, ___) => CustomerScreen()),
+              );
+            },
+            child: Hero(
+              tag: Key("AvatarPhoto"),
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://media.discordapp.net/attachments/708078392376950807/839709195166941184/Picture3.jpg"),
-              )),
+                backgroundColor: Colors.white,
+                radius: 20.0,
+                child: Icon(
+                  Icons.face,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
           Consumer<Cart>(
             builder: (_, cart, ch) =>
                 Badge(child: ch, value: cart.itemCount.toString()),
@@ -111,8 +127,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         ),
                       );
                     }
-
-
                   })
             ],
           ),
