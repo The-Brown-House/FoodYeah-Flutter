@@ -61,7 +61,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ListTile(
               leading: Icon(Icons.home),
               title: FadeAnimation(
-                  Text("Home", style: GoogleFonts.varelaRound()), 300, 1),
+                  Text("Inicio", style: GoogleFonts.varelaRound()), 300, 1),
               onTap: () {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/home', (route) => false);
@@ -71,18 +71,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ListTile(
               leading: Icon(Icons.payment),
               title: FadeAnimation(
-                  Text("Orders", style: GoogleFonts.varelaRound()), 600, 1),
+                  Text("Ordenes", style: GoogleFonts.varelaRound()), 600, 1),
               onTap: () {
                 Navigator.of(context).pushNamed(OrdersScreen.routeName);
               },
             ),
             if (isAdmin)
-              getListItem("Product Management", Icons.settings, () {}, 900),
+              getListItem("Gestión de Productos", Icons.settings, () {}, 900),
             if (isAdmin)
-              getListItem("Customers", Icons.face, () {
+              getListItem("Clientes", Icons.face, () {
                 Navigator.of(context).pushNamed(CustomersScreen.routeName);
               }, 900),
-            getListItem("Log Out", Icons.logout, () {
+            getListItem("Cerrar Sesión", Icons.logout, () {
               Navigator.of(context)
                   .pushNamedAndRemoveUntil("/", (route) => false);
             }, 900)

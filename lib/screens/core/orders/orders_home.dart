@@ -14,7 +14,6 @@ class OrdersHome extends StatefulWidget {
 class _OrdersHomeState extends State<OrdersHome> {
   @override
   Widget build(BuildContext context) {
-
     var orderProvider = Provider.of<Orders>(context);
     var customerProvider = Provider.of<Customers>(context);
 
@@ -25,7 +24,7 @@ class _OrdersHomeState extends State<OrdersHome> {
     }
 
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       child: Padding(
         padding: const EdgeInsets.only(left: 5.0),
@@ -38,14 +37,13 @@ class _OrdersHomeState extends State<OrdersHome> {
                 if (snapshot.data != null) {
                   var items = snapshot.data as List<Order>;
                   return Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.25,
                     width: MediaQuery.of(context).size.width,
                     child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: items.length,
-                        itemBuilder: (ctx, index) =>
-                          OrderItem(items[index]),
-                        ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: items.length,
+                      itemBuilder: (ctx, index) => OrderItem(items[index]),
+                    ),
                   );
                 } else {
                   return Container(
@@ -55,7 +53,7 @@ class _OrdersHomeState extends State<OrdersHome> {
                       child: CircularProgressIndicator(
                         backgroundColor: Colors.white,
                         valueColor:
-                        new AlwaysStoppedAnimation<Color>(Colors.blue),
+                            new AlwaysStoppedAnimation<Color>(Colors.blue),
                       ));
                 }
               },
@@ -66,5 +64,3 @@ class _OrdersHomeState extends State<OrdersHome> {
     );
   }
 }
-
-

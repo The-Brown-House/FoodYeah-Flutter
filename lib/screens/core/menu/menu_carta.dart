@@ -15,7 +15,7 @@ class _MenuCartaState extends State<MenuCarta> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,13 +26,14 @@ class _MenuCartaState extends State<MenuCarta> {
               if (snapshot.data != null) {
                 var items = snapshot.data as List<Product>;
                 return Container(
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   width: MediaQuery.of(context).size.width,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: items.length,
                       itemBuilder: (ctx, index) => Container(
-                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
                             child: ProductListItem(items[index]),
                           )),
                 );

@@ -21,7 +21,7 @@ class _OrderItemState extends State<OrderItem> {
       height: 200,
       child: FadeAnimation(
           Card(
-            elevation: 0,
+            elevation: 8,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: Container(
@@ -72,8 +72,10 @@ class _OrderItemState extends State<OrderItem> {
                                                   .productImageUrl!),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10.0),
-                                          child: Text(orderDetails[indx].productName!),
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: Text(
+                                              orderDetails[indx].productName!),
                                         ),
                                       ],
                                     ),

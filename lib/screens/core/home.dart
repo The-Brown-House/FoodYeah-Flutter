@@ -102,7 +102,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     if (snapshot.data != null) {
                       var data = snapshot.data as Map<String, dynamic>;
                       return Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 10.0, top: 25.0),
                         child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
@@ -165,7 +165,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             ),
             FadeAnimation(
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0),
+                  padding: EdgeInsets.only(left: 10.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text("Nuestro menú",
@@ -187,7 +187,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 1),
             FadeAnimation(
                 Padding(
-                  padding: EdgeInsets.only(top: 25.0, left: 20.0),
+                  padding: EdgeInsets.only(top: 5.0, left: 10.0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text("Platillos a la carta",
@@ -199,7 +199,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             FadeAnimation(MenuCarta(), 1500, 1),
             FadeAnimation(
                 Padding(
-                  padding: EdgeInsets.only(left: 20.0),
+                  padding: EdgeInsets.only(left: 10.0, top: 0),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text("Mis Pedidos",
