@@ -45,6 +45,7 @@ class _RegisterFormState extends State<RegisterForm>
       Provider.of<Customers>(context, listen: false)
           .registerUser(_toSend, context)
           .then((value) {
+        _formKey.currentState!.reset();
         setState(() {
           loader = false;
         });
