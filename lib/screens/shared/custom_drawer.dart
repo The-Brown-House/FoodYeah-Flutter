@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
 import 'package:foodyeah/screens/core/customers/customers_screen.dart';
+import 'package:foodyeah/screens/core/dashboard/dashboard_screen.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -71,13 +72,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ListTile(
               leading: Icon(Icons.payment),
               title: FadeAnimation(
-                  Text("Ordenes", style: GoogleFonts.varelaRound()), 600, 1),
+                  Text("Órdenes", style: GoogleFonts.varelaRound()), 600, 1),
               onTap: () {
                 Navigator.of(context).pushNamed(OrdersScreen.routeName);
               },
             ),
             if (isAdmin)
-              getListItem("Gestión de Productos", Icons.settings, () {}, 900),
+              getListItem("Gestión de Productos", Icons.settings, () {
+                Navigator.of(context).pushNamed(DashBoardScreen.routeName);
+              }, 900),
             if (isAdmin)
               getListItem("Clientes", Icons.face, () {
                 Navigator.of(context).pushNamed(CustomersScreen.routeName);

@@ -13,9 +13,9 @@ class Product {
   factory Product.fromJson(dynamic json) {
     Map<String, dynamic> productcat = json['product_Category'];
     ProductCategory productcategory = new ProductCategory(
-        productcat['product_CategoryId'].toString(),
-        productcat['product_CategoryName'],
-        productcat['product_CategoryDescription']);
+        id: productcat['product_CategoryId'].toString(),
+        name: productcat['product_CategoryName'],
+        description: productcat['product_CategoryDescription']);
     return Product(
         id: json['productId'].toString(),
         description: json['productDescription'] as String,

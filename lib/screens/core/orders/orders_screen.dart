@@ -88,7 +88,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Tus Ordenes",
+                "Tus Órdenes",
                 style: GoogleFonts.varelaRound(fontSize: 25),
                 textAlign: TextAlign.left,
               ),
