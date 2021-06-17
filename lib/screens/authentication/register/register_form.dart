@@ -72,14 +72,6 @@ class _RegisterFormState extends State<RegisterForm>
                     SizedBox(
                       height: 30,
                     ),
-                    Text(
-                      "Registro",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: GoogleFonts.varelaRound().fontFamily,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
-                    ),
                     TextFormField(
                       focusNode: _nombreFocusNode,
                       onFieldSubmitted: (_) {

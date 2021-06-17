@@ -84,7 +84,7 @@ class _LoginScreenState extends State<AuthenticationScreen>
                   duration: Duration(milliseconds: 300),
                   margin: EdgeInsets.only(top: 120),
                   height:
-                      _selected[0] ? deviceHeight * 0.5 : deviceHeight * 0.6,
+                      _selected[0] ? deviceHeight * 0.6 : deviceHeight * 0.6,
                   width: deviceWidth * 0.85,
                   child: Card(
                     elevation: 10,

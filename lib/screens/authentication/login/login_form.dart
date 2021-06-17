@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Customer.dart';
@@ -8,6 +9,8 @@ import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 
 class LoginForm extends StatefulWidget {
   const LoginForm();
@@ -17,6 +20,24 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
+
+
+
+  Future<void> _loginWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.i.login(permissions: ['email','public_profile']);
+      if (result.status == LoginStatus.success) {
+        final AccessToken accessToken = result.accessToken!;
+        final userData = await FacebookAuth.i.getUserData();
+        //para ver los datos del user en fb
+        print(userData);
+      }
+    }
+    catch (e, s) {
+      print(s);
+    }
+  }
+
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
   bool loader = false;
@@ -62,14 +83,6 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   children: [
                     SizedBox(
                       height: 30,
-                    ),
-                    Text(
-                      "Ingresa",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: GoogleFonts.varelaRound().fontFamily,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
@@ -159,6 +172,49 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                                         GoogleFonts.varelaRound(fontSize: 18),
                                   )),
                             ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Text(
+                        "o ingresa con ",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ),
+                    OpenContainer(
+                      routeSettings: RouteSettings(name: Home.routeName),
+                      transitionDuration: Duration(seconds: 1),
+                      transitionType: transitionType,
+                      closedElevation: 0,
+                      openElevation: 0,
+                      openBuilder: (context, _) => Home(),
+                      closedBuilder: (_, open) => loader
+                          ? Container(
+                        padding: EdgeInsets.all(4),
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Colors.blue),
+                        ),
+                      )
+                          : SizedBox(
+                        width: double.infinity,
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            FloatingActionButton(
+                              backgroundColor: Color(0xff3b5998),
+                              child: Icon(
+                                FontAwesomeIcons.facebookSquare,
+                                color: Colors.white,
+                              ),
+                              onPressed: _loginWithFacebook,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
