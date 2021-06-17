@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product_Category.dart';
+import 'package:foodyeah/providers/product_categories_provider.dart';
+import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_dashboard.dart';
+import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProductCategoryDashboardItem extends StatefulWidget {
   final ProductCategory category;
@@ -16,6 +20,47 @@ class _ProductCategoryDashboardItemState
     extends State<ProductCategoryDashboardItem> {
   @override
   Widget build(BuildContext context) {
+    var categoryProvider = Provider.of<ProductCategories>(context);
+    void _deleteItem(String categoryId) {
+      showDialog(
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+                title: Text("¿Estas Seguro?"),
+                content:
+                    Text("¿Estas seguro que deseas eliminar este producto?"),
+                actions: [
+                  TextButton(
+                      onPressed: () async {
+                        var response =
+                            await categoryProvider.deleteCategory(categoryId);
+                        if (response == true) {
+                          NotificationService().showSnackbar(
+                              context,
+                              "Ha eliminado la categoría correctamente",
+                              "success",
+                              null);
+                        } else {
+                          NotificationService().showSnackbar(
+                              context,
+                              "Ha ocurrido un error al eliminar la categoría",
+                              "error",
+                              null);
+                        }
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushReplacementNamed(
+                            ProductCategoriesDashboard.routeName);
+                      },
+                      child: Text("Si")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text("No"))
+                ]);
+          });
+    }
+
     return FadeAnimation(
         Container(
           margin: EdgeInsets.all(10),
@@ -57,7 +102,9 @@ class _ProductCategoryDashboardItemState
                             children: [
                               InkWell(
                                   customBorder: CircleBorder(),
-                                  onTap: () {},
+                                  onTap: () {
+                                    _deleteItem(widget.category.id!);
+                                  },
                                   child: Padding(
                                     padding: EdgeInsets.all(5),
                                     child: Icon(

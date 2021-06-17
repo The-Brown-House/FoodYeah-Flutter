@@ -4,6 +4,7 @@ import 'package:foodyeah/models/OrderDetail.dart';
 import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/screens/core/cart/badge.dart';
 import 'package:foodyeah/screens/core/cart/cart_screen.dart';
+import 'package:foodyeah/screens/core/orders/orderDetails/order_detail_item.dart';
 import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -51,6 +52,7 @@ class _DetailScreenState extends State<DetailScreen> {
             child: Column(
               children: [
                 Container(
+                  padding: EdgeInsets.only(top: 10),
                   width: double.infinity,
                   child: Text(
                       "Detalles de la orden #" + args.orderId.toString(),
@@ -66,55 +68,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       itemCount: args.orderDetails!.length,
                       itemBuilder: (ctx, indx) {
                         List<OrderDetail>? orderDetails = args.orderDetails;
-                        return Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Image(
-                                  image: NetworkImage(
-                                      orderDetails![indx].productImageUrl!),
-                                  height: 120,
-                                  width: 150,
-                                ),
-                              ),
-                              Container(width: 20),
-                              Column(
-                                children: [
-                                  Text(orderDetails[indx].productName!,
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.varelaRound(
-                                          fontSize: 15, fontWeight: FontWeight.bold)),
-                                  Text(
-                                      "Cantidad: " +
-                                          orderDetails[indx]
-                                              .quantity
-                                              .toString(),
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.varelaRound(
-                                          fontSize: 15)),
-                                  Text(
-                                      "Precio Unidad: S/." +
-                                          orderDetails[indx]
-                                              .unitPrice
-                                              .toString(),
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.varelaRound(
-                                          fontSize: 15)),
-                                  Text(
-                                      "Total: S/." +
-                                          orderDetails[indx]
-                                              .totalPrice
-                                              .toString(),
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          GoogleFonts.varelaRound(fontSize: 15))
-                                ],
-                              )
-                            ],
-                          ),
-                        );
+                        return OrderDetailItem(orderDetails![indx]);
                       }),
                 ),
                 const Divider(

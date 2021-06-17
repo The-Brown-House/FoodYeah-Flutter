@@ -69,4 +69,14 @@ class Products with ChangeNotifier {
     }
     return [];
   }
+
+  Future<bool> deleteProduct(String productId) async {
+    var uri = Uri.parse(apiurl + "/" + productId);
+    var response = await http.delete(uri);
+    if (response.statusCode != 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

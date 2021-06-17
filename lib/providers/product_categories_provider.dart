@@ -23,4 +23,14 @@ class ProductCategories with ChangeNotifier {
     }
     return [];
   }
+
+  Future<bool> deleteCategory(String categoryId) async {
+    var uri = Uri.parse(apiurl + "/" + categoryId);
+    var response = await http.delete(uri);
+    if (response.statusCode != 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
