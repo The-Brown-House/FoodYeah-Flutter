@@ -21,22 +21,36 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
 
-
-
   Future<void> _loginWithFacebook() async {
-    try {
+
       final LoginResult result = await FacebookAuth.i.login(permissions: ['email','public_profile']);
       if (result.status == LoginStatus.success) {
-        final AccessToken accessToken = result.accessToken!;
-        final userData = await FacebookAuth.i.getUserData();
-        //para ver los datos del user en fb
-        print(userData);
-      }
-    }
-    catch (e, s) {
-      print(s);
-    }
+        final userData = await FacebookAuth.i.getUserData(
+          fields: "name, email",
+        );
+        //show facebookData in console
+        print(userData.values.elementAt(0).split(' ')[0].toString());//name
+        print(userData.values.elementAt(0).split(' ')[1].toString());//lastname
+        print(userData.values.elementAt(1).toString());//email
+        print(userData.values.elementAt(0).split(' ')[0]+
+            userData.values.elementAt(0).split(' ')[1]+
+            userData.values.elementAt(2).toString());//id-> used as password
+
+        CustomerRegisterDto _toSendF = new CustomerRegisterDto(
+            userData.values.elementAt(1).toString(),
+            userData.values.elementAt(0).split(' ')[0]+
+                userData.values.elementAt(0).split(' ')[1]+
+                userData.values.elementAt(2).toString(),
+            userData.values.elementAt(0).split(' ')[0].toString(),
+            userData.values.elementAt(0).split(' ')[1].toString()
+        );
+
+        Provider.of<Customers>(context, listen: false)
+            .registerUser(_toSendF, context);
+        }
   }
+
+
 
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
