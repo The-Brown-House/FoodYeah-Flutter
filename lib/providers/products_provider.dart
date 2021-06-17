@@ -105,7 +105,7 @@ class Products with ChangeNotifier {
       print('failed');
     }
   }
-  Future<void> updateProduct(Product product, int id) async {
+  Future<void> updateProduct(ProductRegister product, int id) async {
     var uri = Uri.parse(apiurl + "/$id");;
     print(product.name);
     var body = jsonEncode({

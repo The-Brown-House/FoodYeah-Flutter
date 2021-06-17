@@ -20,8 +20,23 @@ class ProductDialog {
     var productProvider = Provider.of<Products>(context);
 
     if(!nuevo){
+      txtName.text = product.name.toString();
+      txtPrice.text = product.price.toString();
+      txtStock.text = product.stock.toString();
+      txtCat.text = (product.category!.id).toString();
+      txtImg.text = product.imageUrl.toString();
+      txtSellDay.text = product.sellDay.toString();
+      txtProduct.text = product.description.toString();
 
-
+    }else{
+     txtName.text = '';
+     txtName.text = '';
+     txtPrice.text = '';
+     txtStock.text = '';
+     txtCat.text = '';
+     txtImg.text ='';
+     txtSellDay.text = '';
+     txtProduct.text = '';
     }
 
 
@@ -30,6 +45,7 @@ class ProductDialog {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+
       content: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -61,6 +77,14 @@ class ProductDialog {
               controller: txtStock,
               decoration: InputDecoration(hintText: 'Stock Disponible'),
             ),
+
+            nuevo==false?ElevatedButton(onPressed: (){
+
+              ProductRegister uno = ProductRegister(txtName.text,double.parse(txtPrice.text) ,txtImg.text,txtSellDay.text,int.parse(txtStock.text),txtProduct.text,int.parse(txtCat.text));
+
+              productProvider.updateProduct(uno, int.parse(product.id.toString()));
+              Navigator.pop(context);
+            }, child: Text('Save')):
             ElevatedButton(onPressed: (){
               ProductRegister uno = ProductRegister(txtName.text,double.parse(txtPrice.text) ,txtImg.text,txtSellDay.text,int.parse(txtStock.text),txtProduct.text,int.parse(txtCat.text));
 

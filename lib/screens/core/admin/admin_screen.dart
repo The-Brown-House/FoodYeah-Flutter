@@ -122,7 +122,7 @@ class _AdminScreenState extends State<AdminScreen> {
                                             IconButton(
                                               icon: Icon(Icons.edit,),
                                               onPressed: (){
-                                                productProvider.updateProduct(items[indx],int.parse(items[indx].id.toString()));
+
                                                 showDialog(context: context, builder: (BuildContext context) => dialog.buildDialog(context,items[indx],false));
 
                                               },
