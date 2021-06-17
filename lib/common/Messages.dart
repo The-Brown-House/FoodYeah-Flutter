@@ -86,6 +86,9 @@ class Messages {
   // ---- Mensaje General de Error ---- //
   String errorGeneral =
       "Ha ocurrido un error. Intente nuevamente en unos minutos.";
+  // ---- Mensaje de Producto ---- //
+  String successCreate = "Se ha registstrado correctamente la comida.";
+  String errorCreate = "No has llenado los campos correctamente.";
 
   // ---- Mensaje Detalle de Producto ---- //
   String noStockProduct =

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/providers/customer_provider.dart';
+import 'package:foodyeah/screens/core/admin/admin_screen.dart';
 import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/orders/orders_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -77,7 +78,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
               },
             ),
             if (isAdmin)
-              getListItem("Gestión de Productos", Icons.settings, () {}, 900),
+              getListItem("Gestión de Productos", Icons.settings, () {
+                Navigator.of(context).pushNamed(AdminScreen.routeName);
+              }, 900),
             if (isAdmin)
               getListItem("Clientes", Icons.face, () {
                 Navigator.of(context).pushNamed(CustomersScreen.routeName);

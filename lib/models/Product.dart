@@ -2,13 +2,13 @@ import 'package:foodyeah/models/Product_Category.dart';
 
 class Product {
   final String? id;
-  final String? name;
-  final double? price;
-  final String? imageUrl;
-  final String? sellDay;
-  final int? stock;
-  final String? description;
-  final ProductCategory? category;
+   final String? name;
+   final double? price;
+   final String? imageUrl;
+   final String? sellDay;
+   final int? stock;
+   final String? description;
+   final ProductCategory? category;
 
   factory Product.fromJson(dynamic json) {
     Map<String, dynamic> productcat = json['product_Category'];
@@ -36,4 +36,22 @@ class Product {
       this.stock,
       this.description,
       this.category});
+}
+class ProductRegister{
+  final String name;
+  final double price;
+  final String imageUrl;
+  final String sellDay;
+  final int stock;
+  final String description;
+  final int category;
+
+    ProductRegister(
+        this.name,
+        this.price,
+        this.imageUrl,
+        this.sellDay,
+        this.stock,
+        this.description,
+        this.category);
 }

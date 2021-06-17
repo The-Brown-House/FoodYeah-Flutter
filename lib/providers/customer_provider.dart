@@ -18,8 +18,7 @@ class Customers with ChangeNotifier {
     "content-type": "application/json"
   };
 
-  Future<void> registerUser(
-      CustomerRegisterDto customer, BuildContext context) async {
+  Future<void> registerUser(CustomerRegisterDto customer, BuildContext context) async {
     var uri = Uri.parse(apiurl + "/register");
     var body = jsonEncode({
       'email': customer.email,
