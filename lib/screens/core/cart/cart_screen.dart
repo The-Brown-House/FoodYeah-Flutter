@@ -216,6 +216,11 @@ class _CartScreenState extends State<CartScreen> {
                               style: GoogleFonts.varelaRound(fontSize: 25))
                         ]),
             ),
+            Text("Deslizar hacia la izquierda para eliminar un producto",
+                style: GoogleFonts.varelaRound(
+                    fontSize: 15,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
       ),

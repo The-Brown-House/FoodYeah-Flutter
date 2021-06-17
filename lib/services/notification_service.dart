@@ -20,6 +20,7 @@ class NotificationService {
         style: TextStyle(color: Colors.white),
       ),
       action: action,
+      duration: Duration(milliseconds: 500),
     ));
   }
 }
