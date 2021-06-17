@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/models/Product_Category.dart';
 import 'package:foodyeah/providers/product_categories_provider.dart';
+import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_add.dart';
 import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_dashboard.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -115,7 +116,11 @@ class _ProductCategoryDashboardItemState
                                   )),
                               InkWell(
                                 customBorder: CircleBorder(),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      ProductCategoryAddScreen.routeName,
+                                      arguments: widget.category);
+                                },
                                 child: Padding(
                                   padding: EdgeInsets.all(5),
                                   child: Icon(

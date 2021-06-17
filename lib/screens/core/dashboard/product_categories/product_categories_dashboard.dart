@@ -6,6 +6,7 @@ import 'package:foodyeah/providers/product_categories_provider.dart';
 import 'package:foodyeah/screens/core/cart/badge.dart';
 import 'package:foodyeah/screens/core/cart/cart_screen.dart';
 import 'package:foodyeah/screens/core/customer/customer_screen.dart';
+import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_add.dart';
 import 'package:foodyeah/screens/core/dashboard/product_categories/product_category_dashboard_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -118,7 +119,11 @@ class _ProductCategoriesDashboardState
                                   padding: EdgeInsets.all(10),
                                 ),
                                 child: Icon(Icons.add),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed(
+                                      ProductCategoryAddScreen.routeName,
+                                      arguments: new ProductCategory());
+                                },
                               ),
                             ),
                           )

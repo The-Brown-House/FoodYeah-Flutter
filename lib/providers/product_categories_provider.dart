@@ -33,4 +33,33 @@ class ProductCategories with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> addProductCategory(ProductCategory _toSend) async {
+    var uri = Uri.parse(apiurl);
+    var body = jsonEncode({
+      "product_CategoryName": _toSend.name,
+      "product_CategoryDescription": _toSend.description,
+    });
+    var response = await http.post(uri, headers: headers, body: body);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> editProductCategory(
+      ProductCategory _toSend, String categoryId) async {
+    var uri = Uri.parse(apiurl + "/" + categoryId);
+    var body = jsonEncode({
+      "product_CategoryName": _toSend.name,
+      "product_CategoryDescription": _toSend.description,
+    });
+    var response = await http.put(uri, headers: headers, body: body);
+    if (response.statusCode != 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

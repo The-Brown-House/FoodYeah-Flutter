@@ -8,6 +8,7 @@ import 'package:foodyeah/screens/authentication/authentication_screen.dart';
 import 'package:foodyeah/screens/core/customer/customer_screen.dart';
 import 'package:foodyeah/screens/core/customers/customers_screen.dart';
 import 'package:foodyeah/screens/core/dashboard/dashboard_screen.dart';
+import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_add.dart';
 import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_dashboard.dart';
 import 'package:foodyeah/screens/core/dashboard/products/product_add_screen.dart';
 import 'package:foodyeah/screens/core/dashboard/products/products_dashboard.dart';
@@ -55,7 +56,9 @@ class MyApp extends StatelessWidget {
           ProductCategoriesDashboard.routeName: (ctx) =>
               ProductCategoriesDashboard(),
           DetailScreen.routeName: (ctx) => DetailScreen(),
-          ProductAddScreen.routeName: (ctx) => ProductAddScreen()
+          ProductAddScreen.routeName: (ctx) => ProductAddScreen(),
+          ProductCategoryAddScreen.routeName: (ctx) =>
+              ProductCategoryAddScreen()
         },
       ),
     );
