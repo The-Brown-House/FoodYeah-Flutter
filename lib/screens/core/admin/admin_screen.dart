@@ -23,6 +23,7 @@ class AdminScreen extends StatefulWidget {
 class _AdminScreenState extends State<AdminScreen> {
 
   ProductDialog dialog = ProductDialog();
+  Product producto1 = Product();
 
 
 
@@ -115,13 +116,30 @@ class _AdminScreenState extends State<AdminScreen> {
                                       title: Text(
                                         items[indx].name.toString()
                                       ),
-                                        trailing: IconButton(
-                                          icon: Icon(Icons.delete),
-                                          onPressed: (){
-                                            productProvider.deleteProduct(int.parse(items[indx].id.toString()));
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(Icons.edit,),
+                                              onPressed: (){
+                                                productProvider.updateProduct(items[indx],int.parse(items[indx].id.toString()));
+                                                showDialog(context: context, builder: (BuildContext context) => dialog.buildDialog(context,items[indx],false));
 
-                                          },
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.delete,),
+                                              onPressed: (){
+                                                productProvider.deleteProduct(int.parse(items[indx].id.toString()));
+
+                                              },
+                                            )
+
+                                          ]
                                         )
+
+
+
                                     )),
                           );
                         } else {
@@ -168,7 +186,8 @@ class _AdminScreenState extends State<AdminScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          showDialog(context: context, builder: (BuildContext context) => dialog.buildDialog(context));
+
+          showDialog(context: context, builder: (BuildContext context) => dialog.buildDialog(context,producto1,true));
         },
         child: Icon(Icons.add),
       ),

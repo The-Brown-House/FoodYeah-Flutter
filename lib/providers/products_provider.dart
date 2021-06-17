@@ -105,4 +105,28 @@ class Products with ChangeNotifier {
       print('failed');
     }
   }
+  Future<void> updateProduct(Product product, int id) async {
+    var uri = Uri.parse(apiurl + "/$id");;
+    print(product.name);
+    var body = jsonEncode({
+
+      'productName': product.name,
+      'productPrice' : product.price,
+      'imageUrl': product.imageUrl,
+      'sellDay' : product.sellDay,
+      'stock': product.stock,
+      'productDescription': product.description,
+      'product_CategoryId': product.category
+    });
+
+    var response = await http.put(uri, body: body, headers: headers);
+    if (response.statusCode == 201) {
+
+
+      print('success');
+    } else {
+      print(response.statusCode);
+      print('failed');
+    }
+  }
 }

@@ -16,8 +16,13 @@ class ProductDialog {
   final txtProduct = TextEditingController();
 
 
-  Widget buildDialog(BuildContext context){
+  Widget buildDialog(BuildContext context, Product product, bool nuevo){
     var productProvider = Provider.of<Products>(context);
+
+    if(!nuevo){
+
+
+    }
 
 
     return AlertDialog(
