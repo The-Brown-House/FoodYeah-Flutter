@@ -392,13 +392,18 @@ class _ProductAddScreenState extends State<ProductAddScreen>
                     SizedBox(
                       height: 10,
                     ),
+                    categorias.length > 1 ?
                     DropdownButtonFormField<ProductCategory>(
                       decoration: InputDecoration(
                           labelText: "Categoría",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0)),
                           labelStyle: GoogleFonts.varelaRound()),
-                      value: _categorySelected,
+                      value: _product.id == null
+                          ? _categorySelected
+                          : categorias.firstWhere(
+                              (element) => element.id == _product.category!.id
+                              ),
                       onSaved: (value) {
                         _toSend = Product(
                             id: _toSend.id,
@@ -424,7 +429,8 @@ class _ProductAddScreenState extends State<ProductAddScreen>
                           _categorySelected = e!;
                         });
                       },
-                    )
+                    ) :
+                     Text("Cargando categorías",style: GoogleFonts.varelaRound()),
                   ],
                 ),
               ),
