@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
 import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Customer.dart';
@@ -8,6 +9,7 @@ import 'package:foodyeah/screens/core/home.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm();
@@ -17,6 +19,45 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
+  Future<void> _loginWithFacebook() async {
+    final LoginResult result =
+        await FacebookAuth.i.login(permissions: ['email', 'public_profile']);
+    if (result.status == LoginStatus.success) {
+      final userData = await FacebookAuth.i.getUserData(
+        fields: "name, email",
+      );
+      //show facebookData in console
+      print(userData.values.elementAt(0).split(' ')[0].toString()); //name
+      print(userData.values.elementAt(0).split(' ')[1].toString()); //lastname
+      print(userData.values.elementAt(1).toString()); //email
+      print(userData.values.elementAt(0).split(' ')[0] +
+          userData.values.elementAt(0).split(' ')[1] +
+          userData.values.elementAt(2).toString()); //id-> used as password
+
+      CustomerRegisterDto _toSendF = new CustomerRegisterDto(
+          userData.values.elementAt(1).toString(),
+          userData.values.elementAt(0).split(' ')[0] +
+              userData.values.elementAt(0).split(' ')[1] +
+              userData.values.elementAt(2).toString(),
+          userData.values.elementAt(0).split(' ')[0].toString(),
+          userData.values.elementAt(0).split(' ')[1].toString());
+
+      Provider.of<Customers>(context, listen: false)
+          .registerUser(_toSendF, context);
+
+      CustomerLoginDto _toSendFa = new CustomerLoginDto(
+          userData.values.elementAt(1).toString(),
+          userData.values.elementAt(0).split(' ')[0] +
+              userData.values.elementAt(0).split(' ')[1] +
+              userData.values.elementAt(2).toString());
+
+
+      Provider.of<Customers>(context, listen: false)
+          .loginUser(_toSendFa, context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    }
+  }
+
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
   bool loader = false;
@@ -42,9 +83,6 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
               .showSnackbar(context, Messages().successLogIn, "success", null);
           _formKey.currentState!.reset();
         }
-        setState(() {
-          loader = false;
-        });
       });
     }
   }
@@ -62,14 +100,6 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                   children: [
                     SizedBox(
                       height: 30,
-                    ),
-                    Text(
-                      "Ingresa",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: GoogleFonts.varelaRound().fontFamily,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold),
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
@@ -158,6 +188,49 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                                     style:
                                         GoogleFonts.varelaRound(fontSize: 18),
                                   )),
+                            ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Text(
+                        "o ingresa con ",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ),
+                    OpenContainer(
+                      routeSettings: RouteSettings(name: Home.routeName),
+                      transitionDuration: Duration(seconds: 1),
+                      transitionType: transitionType,
+                      closedElevation: 0,
+                      openElevation: 0,
+                      openBuilder: (context, _) => Home(),
+                      closedBuilder: (_, open) => loader
+                          ? Container(
+                              padding: EdgeInsets.all(4),
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.blue),
+                              ),
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FloatingActionButton(
+                                    backgroundColor: Color(0xff3b5998),
+                                    child: Icon(
+                                      FontAwesomeIcons.facebookSquare,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: _loginWithFacebook,
+                                  ),
+                                ],
+                              ),
                             ),
                     ),
                   ],
