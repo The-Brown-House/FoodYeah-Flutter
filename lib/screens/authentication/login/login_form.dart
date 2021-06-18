@@ -11,7 +11,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-
 class LoginForm extends StatefulWidget {
   const LoginForm();
 
@@ -20,37 +19,44 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
-
   Future<void> _loginWithFacebook() async {
+    final LoginResult result =
+        await FacebookAuth.i.login(permissions: ['email', 'public_profile']);
+    if (result.status == LoginStatus.success) {
+      final userData = await FacebookAuth.i.getUserData(
+        fields: "name, email",
+      );
+      //show facebookData in console
+      print(userData.values.elementAt(0).split(' ')[0].toString()); //name
+      print(userData.values.elementAt(0).split(' ')[1].toString()); //lastname
+      print(userData.values.elementAt(1).toString()); //email
+      print(userData.values.elementAt(0).split(' ')[0] +
+          userData.values.elementAt(0).split(' ')[1] +
+          userData.values.elementAt(2).toString()); //id-> used as password
 
-      final LoginResult result = await FacebookAuth.i.login(permissions: ['email','public_profile']);
-      if (result.status == LoginStatus.success) {
-        final userData = await FacebookAuth.i.getUserData(
-          fields: "name, email",
-        );
-        //show facebookData in console
-        print(userData.values.elementAt(0).split(' ')[0].toString());//name
-        print(userData.values.elementAt(0).split(' ')[1].toString());//lastname
-        print(userData.values.elementAt(1).toString());//email
-        print(userData.values.elementAt(0).split(' ')[0]+
-            userData.values.elementAt(0).split(' ')[1]+
-            userData.values.elementAt(2).toString());//id-> used as password
+      CustomerRegisterDto _toSendF = new CustomerRegisterDto(
+          userData.values.elementAt(1).toString(),
+          userData.values.elementAt(0).split(' ')[0] +
+              userData.values.elementAt(0).split(' ')[1] +
+              userData.values.elementAt(2).toString(),
+          userData.values.elementAt(0).split(' ')[0].toString(),
+          userData.values.elementAt(0).split(' ')[1].toString());
 
-        CustomerRegisterDto _toSendF = new CustomerRegisterDto(
-            userData.values.elementAt(1).toString(),
-            userData.values.elementAt(0).split(' ')[0]+
-                userData.values.elementAt(0).split(' ')[1]+
-                userData.values.elementAt(2).toString(),
-            userData.values.elementAt(0).split(' ')[0].toString(),
-            userData.values.elementAt(0).split(' ')[1].toString()
-        );
+      Provider.of<Customers>(context, listen: false)
+          .registerUser(_toSendF, context);
 
-        Provider.of<Customers>(context, listen: false)
-            .registerUser(_toSendF, context);
-        }
+      CustomerLoginDto _toSendFa = new CustomerLoginDto(
+          userData.values.elementAt(1).toString(),
+          userData.values.elementAt(0).split(' ')[0] +
+              userData.values.elementAt(0).split(' ')[1] +
+              userData.values.elementAt(2).toString());
+
+
+      Provider.of<Customers>(context, listen: false)
+          .loginUser(_toSendFa, context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    }
   }
-
-
 
   CustomerLoginDto _toSend = new CustomerLoginDto("", "");
   final transitionType = ContainerTransitionType.fade;
@@ -77,9 +83,6 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
               .showSnackbar(context, Messages().successLogIn, "success", null);
           _formKey.currentState!.reset();
         }
-        setState(() {
-          loader = false;
-        });
       });
     }
   }
@@ -203,32 +206,32 @@ class _LoginFormState extends State<LoginForm> with TickerProviderStateMixin {
                       openBuilder: (context, _) => Home(),
                       closedBuilder: (_, open) => loader
                           ? Container(
-                        padding: EdgeInsets.all(4),
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                          valueColor: new AlwaysStoppedAnimation<Color>(
-                              Colors.blue),
-                        ),
-                      )
-                          : SizedBox(
-                        width: double.infinity,
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            FloatingActionButton(
-                              backgroundColor: Color(0xff3b5998),
-                              child: Icon(
-                                FontAwesomeIcons.facebookSquare,
-                                color: Colors.white,
+                              padding: EdgeInsets.all(4),
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                backgroundColor: Colors.white,
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.blue),
                               ),
-                              onPressed: _loginWithFacebook,
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 100,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  FloatingActionButton(
+                                    backgroundColor: Color(0xff3b5998),
+                                    child: Icon(
+                                      FontAwesomeIcons.facebookSquare,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: _loginWithFacebook,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
                     ),
                   ],
                 ),
