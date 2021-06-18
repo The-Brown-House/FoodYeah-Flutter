@@ -74,7 +74,6 @@ class ProductSearchDelegate extends SearchDelegate<Product?> {
               ),
             ),
           );
-          ;
         }
       },
     );

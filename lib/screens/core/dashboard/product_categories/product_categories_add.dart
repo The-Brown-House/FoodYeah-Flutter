@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foodyeah/models/Customer.dart';
 import 'package:foodyeah/models/Product_Category.dart';
 import 'package:foodyeah/providers/product_categories_provider.dart';
 import 'package:foodyeah/screens/core/dashboard/product_categories/product_categories_dashboard.dart';
@@ -162,7 +161,7 @@ class _ProductCategoryAddState extends State<ProductCategoryAddScreen> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     focusNode: _nameFocusNode,
-                    initialValue: _productCategory!.id == null
+                    initialValue: _productCategory.id == null
                         ? ""
                         : _productCategory.name,
                     onFieldSubmitted: (_) {
@@ -193,7 +192,7 @@ class _ProductCategoryAddState extends State<ProductCategoryAddScreen> {
                   TextFormField(
                     focusNode: _descripcionFocusNode,
                     textInputAction: TextInputAction.done,
-                    initialValue: _productCategory!.id == null
+                    initialValue: _productCategory.id == null
                         ? ""
                         : _productCategory.description,
                     onSaved: (value) {

@@ -25,13 +25,14 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      super.initState();
-    }
-
     var cartProvider = Provider.of<Cart>(context);
     var productProvider = Provider.of<Products>(context);
     var orderProvider = Provider.of<Orders>(context);

@@ -5,7 +5,6 @@ import 'package:foodyeah/providers/cart_provider.dart';
 import 'package:foodyeah/screens/core/cart/badge.dart';
 import 'package:foodyeah/screens/core/cart/cart_screen.dart';
 import 'package:foodyeah/screens/core/orders/orderDetails/order_detail_item.dart';
-import 'package:foodyeah/screens/shared/custom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 

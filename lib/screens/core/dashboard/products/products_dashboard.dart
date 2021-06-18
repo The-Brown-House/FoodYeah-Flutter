@@ -21,13 +21,13 @@ class ProductDashboard extends StatefulWidget {
 
 class _ProductDashboardState extends State<ProductDashboard> {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var productProvider = Provider.of<Products>(context);
-
-    @override
-    void dispose() {
-      super.dispose();
-    }
 
     return Scaffold(
       appBar: AppBar(
