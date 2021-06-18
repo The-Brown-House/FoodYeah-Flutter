@@ -35,7 +35,8 @@ class _ProductAddScreenState extends State<ProductAddScreen>
   final _imageUrlFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   var _selldaySelected;
-  var _categorySelected = new ProductCategory(name: "Escoja una categoría");
+  var categorias = [];
+  var _categorySelected;
   var dias = [
     "Lunes",
     "Martes",
@@ -43,6 +44,19 @@ class _ProductAddScreenState extends State<ProductAddScreen>
     "Jueves",
     "Viernes",
   ];
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData() async {
+    var data = await ProductCategories().getAllProductCategories();
+    setState(() {
+      categorias = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +68,6 @@ class _ProductAddScreenState extends State<ProductAddScreen>
       final isValid = _formKey.currentState!.validate();
       if (isValid) {
         _formKey.currentState!.save();
-
         if (_product!.id == null) {
           showDialog(
               context: context,
@@ -364,8 +377,7 @@ class _ProductAddScreenState extends State<ProductAddScreen>
                               category: _toSend.category,
                               imageUrl: _toSend.imageUrl,
                               price: _toSend.price,
-                              sellDay:
-                                  dias.indexOf(_selldaySelected).toString(),
+                              sellDay: dias.indexOf(value!).toString(),
                               stock: _toSend.stock);
                         },
                         validator: (value) => value == null
@@ -380,54 +392,39 @@ class _ProductAddScreenState extends State<ProductAddScreen>
                     SizedBox(
                       height: 10,
                     ),
-                    FutureBuilder(
-                        future: categoryProvider.getAllProductCategories(),
-                        builder: (ctx, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.done &&
-                              snapshot.hasData) {
-                            var itemsToUse =
-                                snapshot.data as List<ProductCategory>;
-                            return DropdownButtonFormField<ProductCategory>(
-                              decoration: InputDecoration(
-                                  labelText: _categorySelected != null
-                                      ? _categorySelected.name
-                                      : _product.category!.name,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  labelStyle: GoogleFonts.varelaRound(
-                                    color: Colors.black,
-                                  )),
-                              items: itemsToUse
-                                  .map((e) => DropdownMenuItem<ProductCategory>(
-                                        value: e,
-                                        child: new Text(e.name!),
-                                      ))
-                                  .toList(),
-                              onChanged: (e) {
-                                setState(() {
-                                  _categorySelected = e!;
-                                });
-                              },
-                              onSaved: (value) {
-                                _toSend = Product(
-                                    id: _toSend.id,
-                                    name: _toSend.name,
-                                    description: _toSend.description,
-                                    category: _categorySelected,
-                                    imageUrl: _toSend.imageUrl,
-                                    price: _toSend.price,
-                                    sellDay: _toSend.sellDay,
-                                    stock: _toSend.stock);
-                              },
-                            );
-                          } else {
-                            return Text(
-                              "Cargando categorías",
-                              style: GoogleFonts.varelaRound(),
-                            );
-                          }
-                        }),
+                    DropdownButtonFormField<ProductCategory>(
+                      decoration: InputDecoration(
+                          labelText: "Categoría",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0)),
+                          labelStyle: GoogleFonts.varelaRound()),
+                      value: _categorySelected,
+                      onSaved: (value) {
+                        _toSend = Product(
+                            id: _toSend.id,
+                            name: _toSend.name,
+                            description: _toSend.description,
+                            category: _categorySelected,
+                            imageUrl: _toSend.imageUrl,
+                            price: _toSend.price,
+                            sellDay: _toSend.sellDay,
+                            stock: _toSend.stock);
+                      },
+                      items: categorias
+                          .map((e) => DropdownMenuItem<ProductCategory>(
+                                value: e,
+                                child: new Text(e.name!),
+                              ))
+                          .toList(),
+                      validator: (value) => value == null
+                          ? 'Por favor escoja una categoría'
+                          : null,
+                      onChanged: (e) {
+                        setState(() {
+                          _categorySelected = e!;
+                        });
+                      },
+                    )
                   ],
                 ),
               ),
