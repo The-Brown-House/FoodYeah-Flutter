@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodyeah/animation/FadeAnimation.dart';
-import 'package:foodyeah/common/Messages.dart';
 import 'package:foodyeah/models/Product.dart';
 import 'package:foodyeah/providers/products_provider.dart';
+import 'package:foodyeah/screens/core/dashboard/products/product_add_screen.dart';
 import 'package:foodyeah/screens/core/dashboard/products/products_dashboard.dart';
 import 'package:foodyeah/services/notification_service.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,13 +19,13 @@ class ProductDasboardItem extends StatefulWidget {
 class _ProductDasboardItemState extends State<ProductDasboardItem>
     with SingleTickerProviderStateMixin {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var productProvider = Provider.of<Products>(context);
-
-    @override
-    void dispose() {
-      super.dispose();
-    }
 
     void _deleteItem(String productId) {
       showDialog(
@@ -145,7 +145,11 @@ class _ProductDasboardItemState extends State<ProductDasboardItem>
                                   )),
                               InkWell(
                                 customBorder: CircleBorder(),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                      ProductAddScreen.routeName,
+                                      arguments: widget.product);
+                                },
                                 child: Padding(
                                   padding: EdgeInsets.all(5),
                                   child: Icon(

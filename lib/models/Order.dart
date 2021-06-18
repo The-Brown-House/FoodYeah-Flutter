@@ -26,8 +26,6 @@ class Order {
       this.totalPrice});
 
   factory Order.fromJson(dynamic json) {
-    Map<String, dynamic> customerJson = json['customer'];
-
     var orderDetailJson = json["orderDetails"] as List;
     List<OrderDetail> orderDetails = orderDetailJson
         .map((orderDetaildata) => OrderDetail.fromJson(orderDetaildata))

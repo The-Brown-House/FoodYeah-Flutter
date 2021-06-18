@@ -79,4 +79,47 @@ class Products with ChangeNotifier {
       return false;
     }
   }
+
+  Future<bool> addProduct(Product _toSend) async {
+    var uri = Uri.parse(apiurl);
+    int valor = int.parse(_toSend.sellDay!);
+
+    var body = jsonEncode({
+      "productName": _toSend.name,
+      "productPrice": _toSend.price,
+      "sellDay": (valor + 1).toString(),
+      "stock": _toSend.stock,
+      "imageUrl": _toSend.imageUrl,
+      "productDescription": _toSend.description,
+      "product_CategoryId": _toSend.category!.id
+    });
+    var response = await http.post(uri, headers: headers, body: body);
+    if (response.statusCode != 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> editProduct(Product _toSend, String productId) async {
+    var uri = Uri.parse(apiurl + "/" + productId);
+
+    int valor = int.parse(_toSend.sellDay!);
+
+    var body = jsonEncode({
+      "productName": _toSend.name,
+      "productPrice": _toSend.price,
+      "sellDay": (valor + 1).toString(),
+      "stock": _toSend.stock,
+      "imageUrl": _toSend.imageUrl,
+      "productDescription": _toSend.description,
+      "product_CategoryId": _toSend.category!.id
+    });
+    var response = await http.put(uri, headers: headers, body: body);
+    if (response.statusCode != 500) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

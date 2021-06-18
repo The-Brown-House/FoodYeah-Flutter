@@ -15,7 +15,6 @@ class _CustomerListState extends State<CustomerList> {
   @override
   Widget build(BuildContext context) {
     Color getColorGroup() {
-      var totalLoc = widget.customer!.totalloc!;
       var availibleloc = widget.customer!.availibleloc!;
       var fiftypercent = widget.customer!.totalloc! * 0.5;
       var thirtypercent = widget.customer!.totalloc! * 0.3;
