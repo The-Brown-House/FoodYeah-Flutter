@@ -20,7 +20,7 @@ class _OrderItemState extends State<OrderItem> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10),
         width: 300,
-        height: 200,
+        height: 160,
         child: FadeAnimation(
             Card(
               elevation: 8,
@@ -33,19 +33,12 @@ class _OrderItemState extends State<OrderItem> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Orden número ",
+                          Text("Orden ",
                               style: GoogleFonts.varelaRound(fontSize: 20)),
                           Text("#" + widget.order.orderId.toString(),
                               style: GoogleFonts.varelaRound(
                                   fontSize: 20, fontWeight: FontWeight.bold))
                         ],
-                      ),
-                      Container(
-                        width: double.infinity,
-                        child: Text("Detalles de la orden",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.varelaRound(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                       Container(
                         width: double.infinity,
@@ -133,8 +126,9 @@ class _OrderItemState extends State<OrderItem> {
             600,
             1),
       ),
-      onTap: (){
-        Navigator.of(context).pushNamed(DetailScreen.routeName, arguments: widget.order);
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(DetailScreen.routeName, arguments: widget.order);
       },
     );
   }

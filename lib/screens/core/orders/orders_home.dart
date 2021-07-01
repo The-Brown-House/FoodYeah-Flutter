@@ -42,7 +42,11 @@ class _OrdersHomeState extends State<OrdersHome> {
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: items.length,
-                      itemBuilder: (ctx, index) => OrderItem(items[index]),
+                      itemBuilder: (ctx, index) => Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 1, vertical: 5),
+                        child: OrderItem(items[index]),
+                      ),
                     ),
                   );
                 } else {
